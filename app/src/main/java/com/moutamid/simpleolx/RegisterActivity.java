@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -18,6 +20,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private EditText regEmail;
     private EditText regPwd;
+    private Button signupbtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +29,19 @@ public class RegisterActivity extends AppCompatActivity {
 
         regEmail = findViewById(R.id.reg_email);
         regPwd = findViewById(R.id.reg_pwd);
+        signupbtn = findViewById(R.id.signupbtn);
+
+        signupbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                signup();
+            }
+        });
+    }
+
+    public void switchToLoginActivity(View view) {
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
     }
 
     private void signup() {

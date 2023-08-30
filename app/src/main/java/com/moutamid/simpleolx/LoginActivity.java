@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -20,6 +22,7 @@ import java.util.Objects;
 public class LoginActivity extends AppCompatActivity {
     private EditText loginEmail;
     private EditText loginPwd;
+    private Button signinbtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,9 +31,22 @@ public class LoginActivity extends AppCompatActivity {
 
         loginEmail = findViewById(R.id.login_email);
         loginPwd = findViewById(R.id.login_pwd);
+        signinbtn = findViewById(R.id.signinbtn);
+
+        signinbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                signin();
+            }
+        });
     }
 
-    private void login() {
+    public void switchToRegisterActivity(View view) {
+        Intent intent = new Intent(this, RegisterActivity.class);
+        startActivity(intent);
+    }
+
+    private void signin() {
         String email = loginEmail.getText().toString().trim();
         String password = loginPwd.getText().toString().trim();
 

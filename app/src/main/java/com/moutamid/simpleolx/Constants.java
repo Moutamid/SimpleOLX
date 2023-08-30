@@ -11,7 +11,7 @@ public class Constants {
     }
 
     public static DatabaseReference databaseReference() {
-        DatabaseReference db = FirebaseDatabase.getInstance().getReference().child("https://sweet-nutrition-default-rtdb.firebaseio.com/SimpleOlx");
+        DatabaseReference db = FirebaseDatabase.getInstance().getReference().child("SimpleOlx");
         db.keepSynced(true);
         return db;
     }

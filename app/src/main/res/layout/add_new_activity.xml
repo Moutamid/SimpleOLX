@@ -65,4 +65,11 @@
         android:layout_height="wrap_content"
         android:text="Preview Ad" />
 
+    <Button
+        android:id="@+id/btnSubmit"
+        android:layout_width="wrap_content"
+        android:backgroundTint="@color/tintcolor"
+        android:layout_height="wrap_content"
+        android:text="Submit Ad" />
+
 </LinearLayout>

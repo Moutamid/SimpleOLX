@@ -1,24 +1,28 @@
 package com.moutamid.simpleolx;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AdModel {
+    private String adId;
     private String title;
-
     private String category;
     private String description;
     private String contact;
-    private List<String> images;
+    private String SellerUid;
+    private ArrayList<String> images;
     private boolean approved;
 
     public AdModel() {
     }
 
-    public AdModel(String title, String category, String description, String contact, List<String> images, boolean approved) {
+    public AdModel(String adId, String title, String category, String description, String contact, String SellerUid, List<String> images, boolean approved) {
+        this.adId = adId;
         this.title = title;
         this.description = description;
         this.contact = contact;
-        this.images = images;
+        this.SellerUid = SellerUid;
+        this.images = (ArrayList<String>) images;
         this.category = category;
         this.approved = approved;
     }
@@ -53,6 +57,22 @@ public class AdModel {
 
     public void setApproved(boolean approved) {
         this.approved = approved;
+    }
+
+    public String getSellerUid() {
+        return SellerUid;
+    }
+
+    public void setSellerUid(String sellerUid) {
+        this.SellerUid = sellerUid;
+    }
+
+    public String getAdId() {
+        return adId;
+    }
+
+    public void setAdId(String adId) {
+        this.adId = adId;
     }
 }
 

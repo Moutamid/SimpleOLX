@@ -2,6 +2,8 @@ package com.moutamid.simpleolx;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -21,9 +23,11 @@ import java.util.List;
 
 public class ExploreAdsActivity extends AppCompatActivity {
 
+    private static final String TAG = "ExploreAdsActivity";
     private Spinner categorySpinner;
     private ListView adListView;
     private ArrayAdapter<String> categoryAdapter;
+    private List<String> imageUrls;
     private AdListAdapter adListAdapter;
     private DatabaseReference adsRef;
 
@@ -46,10 +50,19 @@ public class ExploreAdsActivity extends AppCompatActivity {
 
         adsRef = Constants.databaseReference().child("Ads");
 
-        adListView.setOnItemClickListener((parent, view, position, id) -> {
-            AdModel selectedAd = adListAdapter.getItem(position);
-            if (selectedAd != null) {
+        adListAdapter.setOnItemClickListener(new AdListAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdModel selectedAd) {
                 Intent intent = new Intent(ExploreAdsActivity.this, AdDetailActivity.class);
+                intent.putExtra("title", selectedAd.getTitle());
+                intent.putExtra("category", selectedAd.getCategory());
+                intent.putExtra("description", selectedAd.getDescription());
+                intent.putExtra("contact", selectedAd.getContact());
+
+                ArrayList<String> imageUrls = new ArrayList<>(selectedAd.getImages());
+                intent.putStringArrayListExtra("images", imageUrls);
+
+                startActivity(intent);
             }
         });
 
@@ -76,7 +89,7 @@ public class ExploreAdsActivity extends AppCompatActivity {
                 List<String> categories = new ArrayList<>();
 
                 for (DataSnapshot categorySnapshot : snapshot.getChildren()) {
-                    String categoryName = categorySnapshot.child("name").getValue(String.class);
+                    String categoryName = categorySnapshot.getValue(String.class);
                     categories.add(categoryName);
                 }
 
@@ -87,7 +100,6 @@ public class ExploreAdsActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                // Handle error if needed
             }
         });
     }
@@ -99,11 +111,10 @@ public class ExploreAdsActivity extends AppCompatActivity {
 
                 for (DataSnapshot adSnapshot : snapshot.getChildren()) {
                     AdModel adModel = adSnapshot.getValue(AdModel.class);
-                    if (adModel != null && adModel.isApproved() && adModel.getCategory().equals(category)) {
-                        adListAdapter.add(adModel);
-                    }
+                        if (adModel.isApproved() && adModel.getCategory().equals(category)) {
+                            adListAdapter.add(adModel);
+                        }
                 }
-
                 adListAdapter.notifyDataSetChanged();
             }
 
@@ -121,8 +132,8 @@ public class ExploreAdsActivity extends AppCompatActivity {
 
                 for (DataSnapshot adSnapshot : snapshot.getChildren()) {
                     AdModel adModel = adSnapshot.getValue(AdModel.class);
-                    if (adModel != null && adModel.isApproved()) {
-                        adListAdapter.add(adModel);
+                        if (adModel.isApproved()) {
+                            adListAdapter.add(adModel);
                     }
                 }
 

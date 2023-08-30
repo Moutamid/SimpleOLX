@@ -2,7 +2,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:clickable="true">
 
     <ImageView
         android:id="@+id/ad_image"
@@ -23,7 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Ad Title"
-            android:textColor="@color/primary"
+            android:textColor="@color/black"
             android:textSize="22sp"
             android:textStyle="bold" />
 
@@ -61,5 +62,12 @@
             android:backgroundTint="@color/tintcolor"
             android:textColor="@color/white"
             android:textSize="14sp" />
+
     </LinearLayout>
+
+    <Button
+        android:id="@+id/editBtn"
+        android:layout_width="73dp"
+        android:layout_height="wrap_content"
+        android:text="Edit" />
 </LinearLayout>

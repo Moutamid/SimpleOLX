@@ -9,6 +9,9 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -28,14 +31,14 @@ public class AddNewActivity extends AppCompatActivity {
     private Spinner spinnerCategory;
     private static final int REQUEST_CODE_IMAGES = 1;
     private List<String> selectedImages = new ArrayList<>();
-    private Button btnAddImages, btnPreview;
+    private Button btnAddImages, btnPreview, btnSubmit;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_new_activity);
 
-        DatabaseReference categoriesRef = FirebaseDatabase.getInstance().getReference("Categories");
+        DatabaseReference categoriesRef = Constants.databaseReference().child("Categories");
 
         editTitle = findViewById(R.id.editTitle);
         editDescription = findViewById(R.id.editDescription);
@@ -43,12 +46,40 @@ public class AddNewActivity extends AppCompatActivity {
         spinnerCategory = findViewById(R.id.spinnerCategory);
         btnAddImages = findViewById(R.id.btnAddImages);
         btnPreview = findViewById(R.id.btnPreview);
+        btnSubmit = findViewById(R.id.btnSubmit);
 
         ArrayAdapter<String> categoryAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item);
         categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerCategory.setAdapter(categoryAdapter);
 
-        categoriesRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        btnSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Get ad details
+                String title = editTitle.getText().toString();
+                String description = editDescription.getText().toString();
+                String contact = editContact.getText().toString();
+                String category = spinnerCategory.getSelectedItem().toString();
+                String currentUserUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+                DatabaseReference adsRef = Constants.databaseReference().child("Ads");
+                DatabaseReference newAdRef = adsRef.push();
+                String adKey = newAdRef.getKey();
+
+                AdModel newAd = new AdModel(adKey, title, category, description, contact, currentUserUid, selectedImages, false);
+                newAd.setSellerUid(currentUserUid);
+
+                newAdRef.setValue(newAd);
+
+                editTitle.setText("");
+                editDescription.setText("");
+                editContact.setText("");
+                selectedImages.clear();
+
+                Toast.makeText(AddNewActivity.this, "Ad submitted for approval", Toast.LENGTH_SHORT).show();
+            }
+        });
+                categoriesRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 List<String> categories = new ArrayList<>();
