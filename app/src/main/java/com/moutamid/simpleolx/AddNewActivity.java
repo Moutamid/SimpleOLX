@@ -17,6 +17,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -55,31 +57,50 @@ public class AddNewActivity extends AppCompatActivity {
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Get ad details
                 String title = editTitle.getText().toString();
                 String description = editDescription.getText().toString();
                 String contact = editContact.getText().toString();
                 String category = spinnerCategory.getSelectedItem().toString();
-                String currentUserUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                String currentUserUid = Constants.auth().getCurrentUser().getUid();
 
                 DatabaseReference adsRef = Constants.databaseReference().child("Ads");
                 DatabaseReference newAdRef = adsRef.push();
                 String adKey = newAdRef.getKey();
 
-                AdModel newAd = new AdModel(adKey, title, category, description, contact, currentUserUid, selectedImages, false);
-                newAd.setSellerUid(currentUserUid);
+                // Upload images and update URLs
+                List<String> updatedImageUrls = new ArrayList<>();
+                int totalImages = selectedImages.size();
+                final int[] uploadedImages = {0};
 
-                newAdRef.setValue(newAd);
+                for (String imageUrl : selectedImages) {
+                    Uri imageUri = Uri.parse(imageUrl);
+                    StorageReference imageRef = FirebaseStorage.getInstance().getReference().child("images/" + imageUri.getLastPathSegment());
 
-                editTitle.setText("");
-                editDescription.setText("");
-                editContact.setText("");
-                selectedImages.clear();
+                    imageRef.putFile(imageUri).addOnSuccessListener(taskSnapshot -> {
+                        imageRef.getDownloadUrl().addOnSuccessListener(uri -> {
+                            updatedImageUrls.add(uri.toString());
+                            uploadedImages[0]++;
 
-                Toast.makeText(AddNewActivity.this, "Ad submitted for approval", Toast.LENGTH_SHORT).show();
+                            if (uploadedImages[0] == totalImages) {
+                                AdModel newAd = new AdModel(adKey, title, category, description, contact, currentUserUid, updatedImageUrls, false);
+                                newAd.setSellerUid(currentUserUid);
+
+                                newAdRef.setValue(newAd);
+
+                                editTitle.setText("");
+                                editDescription.setText("");
+                                editContact.setText("");
+                                selectedImages.clear();
+
+                                Toast.makeText(AddNewActivity.this, "Ad submitted for approval", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    });
+                }
             }
         });
-                categoriesRef.addListenerForSingleValueEvent(new ValueEventListener() {
+
+        categoriesRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 List<String> categories = new ArrayList<>();
@@ -102,7 +123,7 @@ public class AddNewActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Open image picker and handle selected images
-                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
                 intent.setType("image/*");
                 intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
                 startActivityForResult(intent, REQUEST_CODE_IMAGES);

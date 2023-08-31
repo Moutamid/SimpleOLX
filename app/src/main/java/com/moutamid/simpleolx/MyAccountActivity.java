@@ -22,8 +22,6 @@ public class MyAccountActivity extends AppCompatActivity {
     private Button updateProfileButton;
     private Button changePasswordButton;
 
-    private FirebaseAuth auth;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,9 +34,7 @@ public class MyAccountActivity extends AppCompatActivity {
         changePasswordButton = findViewById(R.id.change_pwd_btn);
         currentPasswordEditText = findViewById(R.id.current_pwd_et);
 
-        auth = Constants.auth();
-
-        FirebaseUser currentUser = auth.getCurrentUser();
+        FirebaseUser currentUser = Constants.auth().getCurrentUser();
         if (currentUser != null) {
             fullNameEditText.setText(currentUser.getDisplayName());
             emailEditText.setText(currentUser.getEmail());
@@ -50,7 +46,7 @@ public class MyAccountActivity extends AppCompatActivity {
 
     private void updateProfile() {
         String fullName = fullNameEditText.getText().toString().trim();
-        FirebaseUser currentUser = auth.getCurrentUser();
+        FirebaseUser currentUser = Constants.auth().getCurrentUser();
         if (currentUser != null) {
             UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                     .setDisplayName(fullName)
@@ -76,7 +72,7 @@ public class MyAccountActivity extends AppCompatActivity {
             return;
         }
 
-        FirebaseUser currentUser = auth.getCurrentUser();
+        FirebaseUser currentUser = Constants.auth().getCurrentUser();
         if (currentUser != null) {
             AuthCredential credential = EmailAuthProvider.getCredential(currentUser.getEmail(), currentPassword);
 

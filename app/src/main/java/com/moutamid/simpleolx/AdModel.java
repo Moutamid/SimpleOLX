@@ -51,6 +51,22 @@ public class AdModel {
         this.category = category;
     }
 
+    public void setImages(List<String> images) {
+        this.images = (ArrayList<String>) images;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setContact(String contact) {
+        this.contact = contact;
+    }
+
     public boolean isApproved() {
         return approved;
     }

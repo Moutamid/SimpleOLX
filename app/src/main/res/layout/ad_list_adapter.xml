@@ -7,8 +7,8 @@
 
     <ImageView
         android:id="@+id/ad_image"
-        android:layout_width="144dp"
-        android:layout_height="197dp"
+        android:layout_width="160dp"
+        android:layout_height="match_parent"
         android:scaleType="centerCrop"
         android:src="@drawable/mainimg" />
 
@@ -37,15 +37,6 @@
             android:textSize="15sp" />
 
         <Button
-            android:id="@+id/ad_call_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Call"
-            android:backgroundTint="@color/tintcolor"
-            android:textColor="@color/white"
-            android:textSize="14sp" />
-
-        <Button
             android:id="@+id/ad_message_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -54,20 +45,45 @@
             android:textColor="@color/white"
             android:textSize="14sp" />
 
+            <Button
+                android:id="@+id/ad_call_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Call"
+                android:backgroundTint="@color/tintcolor"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+
+            <Button
+                android:id="@+id/ad_whatsapp_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="WhatsApp"
+                android:backgroundTint="@color/tintcolor"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+
         <Button
-            android:id="@+id/ad_whatsapp_button"
+            android:id="@+id/editBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="WhatsApp"
-            android:backgroundTint="@color/tintcolor"
-            android:textColor="@color/white"
-            android:textSize="14sp" />
+            android:text="Edit"
+            android:visibility="gone"/>
+
+            <Button
+                android:id="@+id/approveBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Approve"
+                android:visibility="gone"/>
+
+            <Button
+                android:id="@+id/disapproveBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Reject"
+                android:visibility="gone"/>
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/editBtn"
-        android:layout_width="73dp"
-        android:layout_height="wrap_content"
-        android:text="Edit" />
 </LinearLayout>

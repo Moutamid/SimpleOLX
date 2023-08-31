@@ -13,13 +13,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatSpinner;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
@@ -29,6 +28,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -41,7 +42,7 @@ public class EditAdActivity extends AppCompatActivity {
     private ImagePagerAdapter existingImagesAdapter;
     private List<String> existingImageUrls = new ArrayList<>();
     private EditText editTitle, editDescription, editContact;
-    private Spinner editCategorySpinner;
+    private TextView textCategoryLabel, textCategory;
     private Button submitButton;
     private ArrayAdapter<String> categoryAdapter;
 
@@ -57,21 +58,31 @@ public class EditAdActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_ad);
 
+        categoryAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item);
+        categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        textCategoryLabel = findViewById(R.id.textCategoryLabel);
+        textCategory = findViewById(R.id.edit_category);
+
         btnAddImages = findViewById(R.id.btnAddImages);
         btnDeleteImage = findViewById(R.id.btnDeleteImage);
 
-        adsRef = FirebaseDatabase.getInstance().getReference().child("Ads");
+        adsRef = Constants.databaseReference().child("Ads");
 
         editTitle = findViewById(R.id.edit_title);
-        editCategorySpinner = findViewById(R.id.edit_spinnerCategory);
         editDescription = findViewById(R.id.edit_description);
         editContact = findViewById(R.id.edit_contact);
         submitButton = findViewById(R.id.edit_submit_button);
 
-        adModel = getIntent().getParcelableExtra("adModel");
+        adModel = new AdModel();
+        adModel.setTitle(getIntent().getStringExtra("title"));
+        adModel.setCategory(getIntent().getStringExtra("category"));
+        adModel.setDescription(getIntent().getStringExtra("description"));
+        adModel.setContact(getIntent().getStringExtra("contact"));
+        adModel.setImages(getIntent().getStringArrayListExtra("images"));
 
         if (adModel == null) {
-            finish();
+            Toast.makeText(this, "No Ads Found", Toast.LENGTH_LONG).show();
             return;
         }
 
@@ -84,8 +95,7 @@ public class EditAdActivity extends AppCompatActivity {
         editDescription.setText(adModel.getDescription());
         editContact.setText(adModel.getContact());
 
-        // Fetch available categories and set up the spinner
-        fetchCategories();
+        textCategory.setText(adModel.getCategory());
 
         btnAddImages.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -145,12 +155,16 @@ public class EditAdActivity extends AppCompatActivity {
         @NonNull
         @Override
         public Object instantiateItem(@NonNull ViewGroup container, int position) {
-            View itemView = inflater.inflate(R.layout.activity_edit_ad, container, false);
-            ImageView imageView = itemView.findViewById(R.id.existingImagesViewPager);
+            ImageView imageView = new ImageView(EditAdActivity.this);
+            imageView.setLayoutParams(new ViewGroup.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+
             String imageUrl = imageUrls.get(position);
             Picasso.get().load(imageUrl).into(imageView);
-            container.addView(itemView);
-            return itemView;
+
+            container.addView(imageView);
+            return imageView;
         }
 
         @Override
@@ -168,7 +182,7 @@ public class EditAdActivity extends AppCompatActivity {
     }
 
     private void deleteCurrentImage() {
-        if (!existingImageUrls.isEmpty()) {
+        if (!existingImageUrls.isEmpty() && currentPosition >= 0 && currentPosition < existingImageUrls.size()) {
             existingImageUrls.remove(currentPosition);
             existingImagesAdapter.notifyDataSetChanged();
             updateDeleteButtonVisibility();
@@ -179,6 +193,7 @@ public class EditAdActivity extends AppCompatActivity {
             existingImagesViewPager.setCurrentItem(currentPosition);
         }
     }
+
 
     private void openImagePicker() {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
@@ -209,35 +224,8 @@ public class EditAdActivity extends AppCompatActivity {
         }
     }
 
-
-
-    private void fetchCategories() {
-        DatabaseReference categoriesRef = Constants.databaseReference().child("Categories");
-
-        categoriesRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                List<String> categories = new ArrayList<>();
-
-                for (DataSnapshot categorySnapshot : snapshot.getChildren()) {
-                    String categoryName = categorySnapshot.getValue(String.class);
-                    categories.add(categoryName);
-                }
-
-                categoryAdapter.clear();
-                categoryAdapter.addAll(categories);
-                categoryAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        });
-    }
-
     private void updateAd() {
         String newTitle = editTitle.getText().toString().trim();
-        String newCategory = editCategorySpinner.getSelectedItem().toString();
         String newDescription = editDescription.getText().toString().trim();
         String newContact = editContact.getText().toString().trim();
 
@@ -246,12 +234,30 @@ public class EditAdActivity extends AppCompatActivity {
             return;
         }
 
-        AdModel updatedAd = new AdModel(adModel.getAdId(),newTitle, newCategory, newDescription, newContact, adModel.getSellerUid(), adModel.getImages(), false);
-        updatedAd.setSellerUid(adModel.getSellerUid());
+        int totalImages = existingImageUrls.size();
+        final int[] uploadedImagesCount = {0}; // Using an array to hold the value
 
-        // TODO: Update images if needed
+        List<String> updatedImageUrls = new ArrayList<>();
 
-        updateAdInDatabase(updatedAd);
+        // Upload images and update URLs
+        for (String imageUrl : existingImageUrls) {
+            Uri imageUri = Uri.parse(imageUrl);
+            StorageReference imageRef = FirebaseStorage.getInstance().getReference().child("images/" + imageUri.getLastPathSegment());
+
+            imageRef.putFile(imageUri).addOnSuccessListener(taskSnapshot -> {
+                imageRef.getDownloadUrl().addOnSuccessListener(uri -> {
+                    updatedImageUrls.add(uri.toString());
+                    uploadedImagesCount[0]++; // Increment the value in the array
+
+                    if (uploadedImagesCount[0] == totalImages) {
+                        AdModel updatedAd = new AdModel(adModel.getAdId(), newTitle, adModel.getCategory(), newDescription, newContact, adModel.getSellerUid(), updatedImageUrls, false);
+                        updatedAd.setSellerUid(adModel.getSellerUid());
+
+                        updateAdInDatabase(updatedAd);
+                    }
+                });
+            });
+        }
     }
 
     private void updateAdInDatabase(AdModel updatedAd) {

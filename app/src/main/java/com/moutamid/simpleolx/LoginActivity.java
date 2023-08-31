@@ -1,5 +1,7 @@
 package com.moutamid.simpleolx;
 
+import static com.moutamid.simpleolx.Constants.auth;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,6 +14,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -57,18 +60,25 @@ public class LoginActivity extends AppCompatActivity {
         } else if (password.length() < 6) {
             Toast.makeText(this, "Password must be of 6 characters", Toast.LENGTH_SHORT).show();
         } else {
-            FirebaseAuth auth = Constants.auth();
-            auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
+
+            auth().signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
-                    checkAdminStatus(auth.getCurrentUser().getEmail());
-                } else {
+                    FirebaseUser user = auth().getCurrentUser();
+                    checkAdminStatus(auth().getCurrentUser().getEmail());
+                    if (user != null && user.isEmailVerified()) {
+                        checkAdminStatus(user.getEmail());
+                    } else {
+                        Toast.makeText(this, "Please verify your email first.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                else {
                     Toast.makeText(this, "Login failed: " + Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });
         }
     }
 
-        private void checkAdminStatus(String email) {
+        public void checkAdminStatus(String email) {
             DatabaseReference adminRef = Constants.databaseReference().child("Admins");
 
             adminRef.orderByChild("email").equalTo(email).addListenerForSingleValueEvent(new ValueEventListener() {

@@ -10,9 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
 
 import java.util.Objects;
 
@@ -60,11 +58,10 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void createNewUser(String email, String password) {
-        FirebaseAuth auth = Constants.auth();
-        auth.createUserWithEmailAndPassword(email, password)
+        Constants.auth().createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        FirebaseUser user = auth.getCurrentUser();
+                        FirebaseUser user = Constants.auth().getCurrentUser();
                         if (user != null) {
                             sendVerificationEmail(user);
                         }

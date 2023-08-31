@@ -10,7 +10,7 @@
     <ImageView
         android:id="@+id/imageView4"
         android:layout_width="378dp"
-        android:layout_height="347dp"
+        android:layout_height="300dp"
         android:scaleType="centerCrop"
         app:srcCompat="@drawable/mainimg" />
 
