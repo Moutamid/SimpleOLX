@@ -23,6 +23,7 @@ import com.google.firebase.storage.StorageReference;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +33,8 @@ public class AddNewActivity extends AppCompatActivity {
     private EditText editTitle, editDescription, editContact;
     private Spinner spinnerCategory;
     private static final int REQUEST_CODE_IMAGES = 1;
+    private ViewPager viewPager;
+    private ImagePagerAdapter imagePagerAdapter;
     private List<String> selectedImages = new ArrayList<>();
     private Button btnAddImages, btnPreview, btnSubmit;
 
@@ -39,6 +42,10 @@ public class AddNewActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_new_activity);
+
+        viewPager = findViewById(R.id.viewPagerImages);
+        imagePagerAdapter = new ImagePagerAdapter(this, selectedImages);
+        viewPager.setAdapter(imagePagerAdapter);
 
         DatabaseReference categoriesRef = Constants.databaseReference().child("Categories");
 
@@ -122,7 +129,6 @@ public class AddNewActivity extends AppCompatActivity {
         btnAddImages.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Open image picker and handle selected images
                 Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
                 intent.setType("image/*");
                 intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
@@ -163,6 +169,7 @@ public class AddNewActivity extends AppCompatActivity {
                     Uri imageUri = data.getData();
                     selectedImages.add(imageUri.toString());
                 }
+                imagePagerAdapter.notifyDataSetChanged();
             }
         }
     }

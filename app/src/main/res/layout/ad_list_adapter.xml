@@ -1,20 +1,24 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="16dp"
-    android:clickable="true">
+    android:padding="10dp"
+    android:clickable="true"
+    android:outlineAmbientShadowColor="@color/black"
+    android:background="@drawable/rounded_border_background">
 
     <ImageView
         android:id="@+id/ad_image"
-        android:layout_width="160dp"
-        android:layout_height="match_parent"
+        android:layout_width="100dp"
+        android:layout_height="120dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/mainimg" />
+        android:src="@drawable/mainimg"
+        android:outlineProvider="background" />
 
     <LinearLayout
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_marginStart="16dp"
         android:layout_weight="1"
         android:orientation="vertical">
@@ -25,7 +29,7 @@
             android:layout_height="wrap_content"
             android:text="Ad Title"
             android:textColor="@color/black"
-            android:textSize="22sp"
+            android:textSize="24sp"
             android:textStyle="bold" />
 
         <TextView
@@ -34,55 +38,69 @@
             android:layout_height="wrap_content"
             android:text="Category"
             android:textColor="@color/black"
-            android:textSize="15sp" />
+            android:textSize="18sp" />
 
-        <Button
-            android:id="@+id/ad_message_button"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Message"
-            android:backgroundTint="@color/primary"
-            android:textColor="@color/white"
-            android:textSize="14sp" />
+            android:layout_weight="1"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/ad_message_button"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:backgroundTint="@color/primary"
+                android:text="SMS"
+                android:textColor="@color/white" />
 
             <Button
                 android:id="@+id/ad_call_button"
-                android:layout_width="match_parent"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="50dp"
                 android:layout_height="wrap_content"
-                android:text="Call"
+                android:layout_gravity="bottom"
                 android:backgroundTint="@color/tintcolor"
-                android:textColor="@color/white"
-                android:textSize="14sp" />
+                android:contentDescription="Call"
+                android:drawableLeft="@drawable/baseline_call_24"
+                android:paddingLeft="12dp" />
 
             <Button
                 android:id="@+id/ad_whatsapp_button"
-                android:layout_width="match_parent"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="50dp"
                 android:layout_height="wrap_content"
-                android:text="WhatsApp"
+                android:layout_gravity="bottom"
                 android:backgroundTint="@color/tintcolor"
-                android:textColor="@color/white"
-                android:textSize="14sp" />
+                android:contentDescription="Whatsapp"
+                android:drawableLeft="@drawable/whatsapp"
+                android:paddingLeft="12dp"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
 
         <Button
             android:id="@+id/editBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Edit"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
-            <Button
-                android:id="@+id/approveBtn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Approve"
-                android:visibility="gone"/>
+        <Button
+            android:id="@+id/approveBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Approve"
+            android:visibility="gone" />
 
-            <Button
-                android:id="@+id/disapproveBtn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Reject"
-                android:visibility="gone"/>
+        <Button
+            android:id="@+id/disapproveBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Reject"
+            android:visibility="gone" />
 
     </LinearLayout>
 
