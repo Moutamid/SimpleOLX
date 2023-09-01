@@ -2,17 +2,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/primary"
     android:orientation="vertical"
-    android:padding="16dp"
-    android:background="@color/primary">
+    android:padding="16dp">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Title"
+        android:textColor="@android:color/black"
         android:textSize="18sp"
-        android:textStyle="bold"
-        android:textColor="@android:color/black" />
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/edit_title"
@@ -20,18 +20,18 @@
         android:layout_height="wrap_content"
         android:hint="Enter title"
         android:padding="10dp"
-        android:textSize="16sp"
+        android:textColor="@color/black"
         android:textColorHint="#cccccc"
-        android:textColor="@color/black"/>
+        android:textSize="16sp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Images"
-        android:textSize="18sp"
-        android:textStyle="bold"
         android:layout_marginTop="12dp"
-        android:textColor="@android:color/black" />
+        android:text="Images"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/existingImagesViewPager"
@@ -41,41 +41,41 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="16dp">
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/btnAddImages"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:backgroundTint="@color/secondary"
             android:padding="10dp"
             android:text="Add Images"
-            android:textSize="14sp"
-            android:textColor="@android:color/black"
-            android:backgroundTint="@color/secondary" />
+            android:textColor="@android:color/white"
+            android:textSize="14sp" />
 
         <Button
             android:id="@+id/btnDeleteImage"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:backgroundTint="@color/secondary"
             android:padding="10dp"
             android:text="Delete Image"
-            android:textSize="14sp"
             android:textColor="@android:color/black"
-            android:backgroundTint="@color/secondary"
+            android:textSize="14sp"
             android:visibility="gone" />
     </LinearLayout>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Description"
-        android:textSize="18sp"
-        android:textStyle="bold"
         android:layout_marginTop="14dp"
-        android:textColor="@android:color/black" />
+        android:text="Description"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/edit_description"
@@ -84,18 +84,18 @@
         android:hint="Enter description"
         android:inputType="textMultiLine"
         android:padding="10dp"
-        android:textSize="16sp"
+        android:textColor="@color/black"
         android:textColorHint="#cccccc"
-        android:textColor="@color/black" />
+        android:textSize="16sp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Contact"
-        android:textSize="18sp"
-        android:textStyle="bold"
         android:layout_marginTop="14dp"
-        android:textColor="@android:color/black" />
+        android:text="Contact"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/edit_contact"
@@ -104,37 +104,37 @@
         android:hint="Enter contact"
         android:inputType="textMultiLine"
         android:padding="10dp"
-        android:textSize="16sp"
+        android:textColor="@color/black"
         android:textColorHint="#cccccc"
-        android:textColor="@color/black" />
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/textCategoryLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Category"
-        android:textSize="18sp"
-        android:textStyle="bold"
         android:layout_marginTop="14dp"
-        android:textColor="@android:color/black" />
+        android:text="Category"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
     <Spinner
         android:id="@+id/categorySpinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@android:color/white"
         android:background="#cccccc"
-        android:textColorHint="@android:color/white"/>
+        android:textColor="@android:color/white"
+        android:textColorHint="@android:color/white" />
 
     <Button
         android:id="@+id/edit_submit_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="Submit Changes"
-        android:textSize="14sp"
-        android:textColor="@android:color/black"
+        android:layout_marginTop="16dp"
         android:backgroundTint="@color/secondary"
-        android:layout_marginTop="16dp" />
+        android:text="Submit Changes"
+        android:textColor="@android:color/white"
+        android:textSize="14sp" />
 
 </LinearLayout>

@@ -2,25 +2,26 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/primary"
     android:orientation="vertical"
-    android:padding="16dp"
-    android:background="@color/primary">
+    android:padding="16dp">
 
     <Spinner
         android:id="@+id/category_spinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/black"
         android:layout_marginBottom="16dp"
-        android:backgroundTint="#cccccc"
-        android:textColorHint="@color/black"
         android:background="@drawable/rounded_border_background"
-        android:minHeight="48dp" />
+        android:backgroundTint="#cccccc"
+        android:minHeight="48dp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black" />
 
     <ListView
-        android:allowClickWhenDisabled="true"
         android:id="@+id/ad_listview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/rounded_border_background"/>
+        android:allowClickWhenDisabled="true"
+        android:background="@drawable/rounded_border_background" />
+
 </LinearLayout>
