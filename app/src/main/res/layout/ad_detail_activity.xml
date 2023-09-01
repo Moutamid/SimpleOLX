@@ -1,91 +1,132 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:padding="16dp"
-    android:background="@color/white">
+    android:background="@color/primary"
+    android:padding="12dp">
 
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/viewPager"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/rounded_border_background" />
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/image_number_textview"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:background="@drawable/rounded_border_background"
+            tools:layout_editor_absoluteX="1dp" />
+
+        <TextView
+            android:id="@+id/image_number_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:background="@drawable/highlight_background"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/viewPager"
+            app:layout_constraintStart_toStartOf="@+id/viewPager"
+            app:layout_constraintEnd_toEndOf="@+id/viewPager"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
         android:id="@+id/ad_detail_title"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        android:text="Hello"
-
+        android:text="Title"
         android:textColor="@color/black"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="8dp"/>
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:layout_marginTop="16dp" />
 
     <TextView
         android:id="@+id/ad_detail_category"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="22sp"
-        android:textColor="@color/black"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="8dp"/>
+        android:text="Category"
+        android:textColor="#cccccc"
+        android:textSize="20sp"
+        android:layout_marginTop="8dp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#E0E0E0"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="16dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Description"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginTop="16dp"
+        android:textColor="@color/black" />
 
     <TextView
         android:id="@+id/ad_detail_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:layout_marginTop="20dp"
-        android:textColor="@color/black"
-        android:layout_marginBottom="16dp"/>
+        android:textSize="16sp"
+        android:textColor="#cccccc"
+        android:layout_marginTop="8dp"
+        android:text="This is the description for the above ad. The above ad Description is defined here." />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:layout_marginTop="25dp"
+        android:gravity="center">
 
         <Button
             android:id="@+id/btn_call"
             style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="80dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:backgroundTint="@color/tintcolor"
-            android:contentDescription="Call"
-            android:drawableLeft="@drawable/baseline_call_24"
-            android:paddingLeft="10dp"
-            android:layout_marginEnd="10dp"
+            android:layout_weight="0.7"
+            android:backgroundTint="#28D146"
             android:text="Call"
-            android:textColor="@android:color/white" />
+            android:textColor="@color/black"
+            android:drawableTint="@color/black"
+            android:drawableLeft="@drawable/baseline_call_24"
+            android:layout_marginEnd="2dp"
+            android:layout_marginStart="2dp"/>
 
         <Button
             android:id="@+id/btn_message"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:backgroundTint="@color/primary"
+            android:backgroundTint="@color/secondary"
             android:text="Message"
-            android:textColor="@color/white"
-            android:textSize="14sp" />
+            android:textColor="@color/black"
+            android:layout_marginStart="2dp"
+            android:layout_marginEnd="2dp" />
 
         <Button
             android:id="@+id/btn_whatsapp"
             style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="60dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:backgroundTint="@color/tintcolor"
-            android:contentDescription="Whatsapp"
-            android:layout_marginStart="10dp"
+            android:layout_weight="1"
+            android:backgroundTint="#28D146"
+            android:text="WhatsApp"
+            android:textColor="@color/black"
+            android:drawableTint="@color/black"
             android:drawableLeft="@drawable/whatsapp"
-            android:paddingLeft="18dp"
-            android:textColor="@color/white" />
+            android:layout_marginStart="2dp"
+            android:layout_marginEnd="2dp"/>
 
     </LinearLayout>
 </LinearLayout>

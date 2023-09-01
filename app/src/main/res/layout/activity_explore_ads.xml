@@ -4,18 +4,23 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
-    android:background="@color/white">
+    android:background="@color/primary">
 
     <Spinner
         android:id="@+id/category_spinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="@color/black"
         android:layout_marginBottom="16dp"
+        android:backgroundTint="#cccccc"
+        android:textColorHint="@color/black"
+        android:background="@drawable/rounded_border_background"
         android:minHeight="48dp" />
 
     <ListView
         android:allowClickWhenDisabled="true"
         android:id="@+id/ad_listview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_border_background"/>
 </LinearLayout>

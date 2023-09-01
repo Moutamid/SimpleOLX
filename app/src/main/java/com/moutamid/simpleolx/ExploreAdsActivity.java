@@ -68,10 +68,13 @@ public class ExploreAdsActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String selectedCategory = categoryAdapter.getItem(position);
-                fetchAdsByCategory(selectedCategory);
+                if ("All Categories".equals(selectedCategory)) {
+                    fetchAllAds();
+                } else {
+                    fetchAdsByCategory(selectedCategory);
+                }
             }
 
-            @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 fetchAllAds();
             }
@@ -92,6 +95,7 @@ public class ExploreAdsActivity extends AppCompatActivity {
                 }
 
                 categoryAdapter.clear();
+                categoryAdapter.add("All Categories");
                 categoryAdapter.addAll(categories);
                 categoryAdapter.notifyDataSetChanged();
             }

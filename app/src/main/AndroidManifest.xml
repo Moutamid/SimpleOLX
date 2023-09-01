@@ -12,6 +12,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SimpleOLX"
         tools:targetApi="31">
+
+        <activity
+            android:name=".SplashScreenActivity"
+            android:theme="@style/SplashTheme"
+            android:exported="true">
+        </activity>
+
         <activity
             android:name=".AddNewActivity"
             android:exported="false" />
@@ -47,7 +54,6 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

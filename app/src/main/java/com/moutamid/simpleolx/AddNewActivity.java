@@ -4,6 +4,7 @@ import android.content.ClipData;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -11,19 +12,17 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,21 +59,31 @@ public class AddNewActivity extends AppCompatActivity {
         ArrayAdapter<String> categoryAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item);
         categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerCategory.setAdapter(categoryAdapter);
+        categoryAdapter.add("Select Category");
 
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String title = editTitle.getText().toString();
-                String description = editDescription.getText().toString();
-                String contact = editContact.getText().toString();
+                String title = editTitle.getText().toString().trim();
+                String description = editDescription.getText().toString().trim();
+                String contact = editContact.getText().toString().trim();
                 String category = spinnerCategory.getSelectedItem().toString();
                 String currentUserUid = Constants.auth().getCurrentUser().getUid();
+
+                if (TextUtils.isEmpty(title) || TextUtils.isEmpty(description) || TextUtils.isEmpty(contact)) {
+                    Toast.makeText(AddNewActivity.this, "Fill All The Fields", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (selectedImages.isEmpty()) {
+                    Toast.makeText(AddNewActivity.this, "Select at least one image", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
                 DatabaseReference adsRef = Constants.databaseReference().child("Ads");
                 DatabaseReference newAdRef = adsRef.push();
                 String adKey = newAdRef.getKey();
 
-                // Upload images and update URLs
                 List<String> updatedImageUrls = new ArrayList<>();
                 int totalImages = selectedImages.size();
                 final int[] uploadedImages = {0};

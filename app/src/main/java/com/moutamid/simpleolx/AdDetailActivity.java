@@ -9,7 +9,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
@@ -19,7 +18,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 public class AdDetailActivity extends AppCompatActivity {
-    private TextView adDetailTitle, adDetailCategory, adDetailDescription;
+    private TextView adDetailTitle, adDetailCategory, adDetailDescription, imageNumberTextView;
     private ViewPager viewPager;
     ArrayList<String> imageUrls;
 
@@ -29,6 +28,7 @@ public class AdDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ad_detail_activity);
 
+        imageNumberTextView = findViewById(R.id.image_number_textview);
         viewPager = findViewById(R.id.viewPager);
         adDetailTitle = findViewById(R.id.ad_detail_title);
         adDetailCategory = findViewById(R.id.ad_detail_category);
@@ -48,6 +48,12 @@ public class AdDetailActivity extends AppCompatActivity {
         adDetailCategory.setText(category);
         adDetailDescription.setText(description);
 
+        if (!imageUrls.isEmpty()) {
+            imageNumberTextView.setText("1 of " + imageUrls.size());
+        } else {
+            imageNumberTextView.setText("0 of 0");
+        }
+
         ImagePagerAdapter imagePagerAdapter = new ImagePagerAdapter();
         viewPager.setAdapter(imagePagerAdapter);
 
@@ -57,6 +63,25 @@ public class AdDetailActivity extends AppCompatActivity {
                 Intent callIntent = new Intent(Intent.ACTION_DIAL);
                 callIntent.setData(Uri.parse("tel:" + contact));
                 startActivity(callIntent);
+            }
+        });
+
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                // Not needed for this purpose
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                // Update the image number text when the page changes
+                int imageNumber = position + 1;
+                imageNumberTextView.setText(imageNumber + " of " + imageUrls.size());
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                // Not needed for this purpose
             }
         });
 

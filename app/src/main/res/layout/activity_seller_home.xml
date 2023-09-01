@@ -16,7 +16,7 @@
         android:fontFamily="sans-serif-black"
         android:textSize="28sp"
         android:textStyle="bold"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="20dp"/>
 
@@ -34,7 +34,8 @@
         android:layout_marginTop="25dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        android:backgroundTint="@color/tintcolor"
+        android:textColor="@color/black"
+        android:backgroundTint="@color/secondary"
         android:text="Manage Account" />
 
     <Button
@@ -43,7 +44,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        android:backgroundTint="@color/tintcolor"
+        android:textColor="@color/black"
+        android:backgroundTint="@color/secondary"
         android:text="Explore Ads" />
 
     <Button
@@ -52,7 +54,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        android:backgroundTint="@color/tintcolor"
+        android:textColor="@color/black"
+        android:backgroundTint="@color/secondary"
         android:text="Create New Ad" />
 
     <Button
@@ -61,14 +64,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        android:backgroundTint="@color/tintcolor"
+        android:textColor="@color/black"
+        android:backgroundTint="@color/secondary"
         android:text="View/Edit My Ads" />
 
     <Button
         android:id="@+id/logout_button"
+        android:onClick="logoutId"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/tintcolor"
+        android:textColor="@color/black"
+        android:backgroundTint="@color/secondary"
         android:text="Logout" />
 
 </LinearLayout>

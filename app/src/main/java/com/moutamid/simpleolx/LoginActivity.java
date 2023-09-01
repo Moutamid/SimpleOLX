@@ -2,9 +2,6 @@ package com.moutamid.simpleolx;
 
 import static com.moutamid.simpleolx.Constants.auth;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
@@ -13,7 +10,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.firebase.auth.FirebaseAuth;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -85,11 +84,9 @@ public class LoginActivity extends AppCompatActivity {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     boolean isAdmin = dataSnapshot.exists();
-                    if (isAdmin) {
-                        startActivity(new Intent(LoginActivity.this, AdminActivity.class));
-                    } else {
-                        startActivity(new Intent(LoginActivity.this, SellerHomeActivity.class));
-                    }
+                    Intent intent = new Intent(LoginActivity.this, SplashScreenActivity.class);
+                    intent.putExtra("isAdmin", isAdmin);
+                    startActivity(intent);
                 }
 
                 @Override

@@ -1,10 +1,10 @@
 package com.moutamid.simpleolx;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class SellerHomeActivity extends AppCompatActivity {
 
@@ -30,4 +30,11 @@ public class SellerHomeActivity extends AppCompatActivity {
         Intent intent = new Intent(this, ExploreAdsActivity.class);
         startActivity(intent);
     }
+    public void logoutId(View view) {
+        Constants.auth().signOut();
+        Intent intent = new Intent(this, HomeActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
 }
