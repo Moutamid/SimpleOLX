@@ -1,98 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/primary"
     android:orientation="vertical"
-    android:padding="16dp"
-    android:background="@color/primary">
+    android:padding="16dp">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Update Profile"
-        android:fontFamily="sans-serif-black"
-        android:textSize="28sp"
-        android:textColor="@color/black"
-        android:textStyle="bold"
         android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="20dp"/>
+        android:layout_marginBottom="20dp"
+        android:fontFamily="sans-serif-black"
+        android:text="Update Profile"
+        android:textColor="@color/black"
+        android:textSize="28sp"
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/full_name_et"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Full Name"
         android:backgroundTint="#cccccc"
+        android:hint="Full Name"
+        android:inputType="text"
         android:textColor="@color/black"
-        android:textSize="18sp"
         android:textColorHint="#cccccc"
-        android:inputType="text"/>
+        android:textSize="18sp" />
 
     <EditText
         android:id="@+id/email_et"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Email"
-        android:textSize="18sp"
+        android:layout_marginTop="10dp"
         android:backgroundTint="#cccccc"
-        android:textColor="@color/black"
-        android:textColorHint="#cccccc"
-        android:inputType="textEmailAddress"
         android:enabled="false"
         android:focusable="false"
         android:focusableInTouchMode="false"
-        android:layout_marginTop="10dp"/>
+        android:hint="Email"
+        android:inputType="textEmailAddress"
+        android:textColor="@color/black"
+        android:textColorHint="#cccccc"
+        android:textSize="18sp" />
 
     <Button
         android:id="@+id/update_profile_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Update Profile"
-        android:textColor="@color/black"
+        android:layout_marginTop="20dp"
         android:backgroundTint="@color/secondary"
-        android:layout_marginTop="20dp"/>
+        android:text="Update Profile"
+        android:textColor="@color/white" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="20dp"
         android:text="Change Password"
         android:textColor="@color/black"
         android:textSize="28sp"
-        android:textStyle="bold"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="40dp"
-        android:layout_marginBottom="20dp"/>
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/current_pwd_et"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:backgroundTint="#cccccc"
+        android:hint="Current Password"
+        android:inputType="textPassword"
         android:textColor="@color/black"
         android:textColorHint="#cccccc"
-        android:textSize="18sp"
-        android:hint="Current Password"
-        android:inputType="textPassword"/>
+        android:textSize="18sp" />
 
     <EditText
         android:id="@+id/new_pwd_et"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColorHint="#cccccc"
         android:backgroundTint="#cccccc"
-        android:textColor="@color/black"
         android:hint="New Password"
-        android:textSize="18sp"
-        android:inputType="textPassword"/>
+        android:inputType="textPassword"
+        android:textColor="@color/black"
+        android:textColorHint="#cccccc"
+        android:textSize="18sp" />
 
     <Button
         android:id="@+id/change_pwd_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/secondary"
-        android:textColor="@color/black"
         android:layout_marginTop="20dp"
-        android:text="Change Password" />
+        android:backgroundTint="@color/secondary"
+        android:text="Change Password"
+        android:textColor="@color/white" />
 
 </LinearLayout>

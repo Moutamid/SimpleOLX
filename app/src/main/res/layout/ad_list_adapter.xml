@@ -1,14 +1,13 @@
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="8dp"
-    app:cardElevation="4dp"
-    app:cardUseCompatPadding="true"
+    android:background="@drawable/rounded_border_background"
     android:clickable="true"
     android:foreground="?android:attr/selectableItemBackground"
-    android:background="@drawable/rounded_border_background">
+    app:cardCornerRadius="8dp"
+    app:cardElevation="4dp"
+    app:cardUseCompatPadding="true">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,16 +20,14 @@
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/mainimg"
-            android:outlineProvider="background"
-            android:background="@drawable/rounded_border_background"/>
+            android:src="@drawable/mainimg" />
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:layout_weight="1"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/ad_title"
@@ -45,21 +42,21 @@
                 android:id="@+id/ad_category"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
                 android:text="Category"
-                android:textSize="16sp"
                 android:textColor="@color/black"
-                android:layout_marginTop="4dp" />
+                android:textSize="16sp" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#cccccc"
-                android:layout_marginVertical="4dp"/>
+                android:layout_marginVertical="4dp"
+                android:background="#cccccc" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal" >
+                android:orientation="horizontal">
 
                 <Button
                     android:id="@+id/ad_message_button"
@@ -79,8 +76,8 @@
                     android:layout_gravity="bottom"
                     android:backgroundTint="@color/secondary"
                     android:contentDescription="Call"
-                    android:drawableTint="@color/white"
                     android:drawableLeft="@drawable/baseline_call_24"
+                    android:drawableTint="@color/white"
                     android:paddingLeft="14dp" />
 
                 <Button
@@ -91,8 +88,8 @@
                     android:layout_gravity="bottom"
                     android:backgroundTint="@color/secondary"
                     android:contentDescription="Whatsapp"
-                    android:drawableTint="@color/white"
                     android:drawableLeft="@drawable/whatsapp"
+                    android:drawableTint="@color/white"
                     android:paddingLeft="12dp"
                     android:textColor="@color/white" />
 
@@ -102,33 +99,34 @@
                 android:id="@+id/editBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Edit"
-                android:backgroundTint="#301934 "
-                android:textColor="@color/white"
                 android:layout_marginTop="8dp"
+                android:backgroundTint="#301934 "
+                android:text="Edit"
+                android:textColor="@color/white"
                 android:visibility="gone" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal" >
-            <Button
-                android:id="@+id/approveBtn"
-                android:layout_width="120dp"
-                android:layout_height="wrap_content"
-                android:text="Approve"
-                android:backgroundTint="#008000"
-                android:textColor="@color/white"
-                android:visibility="gone" />
+                android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/disapproveBtn"
-                android:layout_width="120dp"
-                android:layout_height="wrap_content"
-                android:text="Reject"
-                android:backgroundTint="#8B0000"
-                android:textColor="@color/white"
-                android:visibility="gone" />
+                <Button
+                    android:id="@+id/approveBtn"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#008000"
+                    android:text="Approve"
+                    android:textColor="@color/white"
+                    android:visibility="gone" />
+
+                <Button
+                    android:id="@+id/disapproveBtn"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#8B0000"
+                    android:text="Reject"
+                    android:textColor="@color/white"
+                    android:visibility="gone" />
             </LinearLayout>
 
         </LinearLayout>

@@ -209,10 +209,4 @@ public class AdminActivity extends AppCompatActivity {
             }
         });
     }
-
-    public void onBackPressed() {
-        Constants.auth().signOut();
-        startActivity(new Intent(AdminActivity.this, HomeActivity.class));
-        finish();
-    }
 }

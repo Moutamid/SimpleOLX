@@ -4,21 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RegisterActivity"
-    android:background="@color/primary">
+    android:background="@color/primary"
+    tools:context=".RegisterActivity">
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="350dp"
-        android:scaleType="centerCrop"
+        android:layout_marginHorizontal="20dp"
+        android:src="@drawable/create_account"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/mainimg"/>
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/signupbtn"
@@ -26,9 +26,9 @@
         android:layout_height="57dp"
         android:backgroundTint="@color/secondary"
         android:text="SIGN UP"
+        android:textColor="@color/white"
         android:textSize="15sp"
         android:textStyle="bold"
-        android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
@@ -55,8 +55,8 @@
         android:layout_height="wrap_content"
         android:backgroundTint="#cccccc"
         android:drawableStart="@drawable/baseline_vpn_key_24"
-        android:drawableTint="@color/black"
         android:drawablePadding="13dp"
+        android:drawableTint="@color/black"
         android:ems="10"
         android:hint="Password"
         android:inputType="textPassword"
@@ -75,8 +75,8 @@
         android:layout_height="wrap_content"
         android:backgroundTint="#cccccc"
         android:drawableLeft="@drawable/baseline_email_24"
-        android:drawableTint="@color/black"
         android:drawablePadding="13dp"
+        android:drawableTint="@color/black"
         android:ems="10"
         android:hint="Email Address"
         android:inputType="textEmailAddress"
@@ -93,9 +93,9 @@
         android:id="@+id/signin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Sign In"
         android:clickable="true"
         android:onClick="switchToLoginActivity"
+        android:text="Sign In"
         android:textColor="@color/secondary"
         android:textSize="18sp"
         android:textStyle="bold"

@@ -15,7 +15,7 @@
         <ImageView
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:background="@color/secondary" />
+            android:src="@drawable/ic_icon_badge" />
 
         <TextView
             android:id="@+id/welcome_text"
@@ -32,8 +32,7 @@
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:layout_marginTop="15dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/mainimg" />
+            android:src="@drawable/stepping_up" />
 
         <TextView
             android:layout_width="match_parent"

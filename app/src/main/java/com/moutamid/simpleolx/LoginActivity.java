@@ -13,6 +13,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.fxn.stash.Stash;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -63,36 +64,49 @@ public class LoginActivity extends AppCompatActivity {
             auth().signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
                     FirebaseUser user = auth().getCurrentUser();
-                    checkAdminStatus(auth().getCurrentUser().getEmail());
                     if (user != null && user.isEmailVerified()) {
-                        checkAdminStatus(user.getEmail());
+
+                        if (auth().getCurrentUser().getEmail().equals("admin@simpleolx.com")) {
+                            Stash.put(Constants.IS_ADMIN, true);
+                            Intent intent = new Intent(LoginActivity.this, AdminActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            finish();
+                            startActivity(intent);
+                        } else {
+                            Stash.put(Constants.IS_ADMIN, false);
+                            Intent intent = new Intent(LoginActivity.this, SellerHomeActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            finish();
+                            startActivity(intent);
+                        }
+
                     } else {
+                        Constants.auth().signOut();
                         Toast.makeText(this, "Please verify your email first.", Toast.LENGTH_SHORT).show();
                     }
-                }
-                else {
+                } else {
                     Toast.makeText(this, "Login failed: " + Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });
         }
     }
 
-        public void checkAdminStatus(String email) {
-            DatabaseReference adminRef = Constants.databaseReference().child("Admins");
+    /*public void checkAdminStatus(String email) {
+        DatabaseReference adminRef = Constants.databaseReference().child("Admins");
 
-            adminRef.orderByChild("email").equalTo(email).addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    boolean isAdmin = dataSnapshot.exists();
-                    Intent intent = new Intent(LoginActivity.this, SplashScreenActivity.class);
-                    intent.putExtra("isAdmin", isAdmin);
-                    startActivity(intent);
-                }
+        adminRef.orderByChild("email").equalTo(email).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                boolean isAdmin = dataSnapshot.exists();
+                Intent intent = new Intent(LoginActivity.this, SplashScreenActivity.class);
+                intent.putExtra("isAdmin", isAdmin);
+                startActivity(intent);
+            }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-                    Toast.makeText(LoginActivity.this, "Error checking admin status", Toast.LENGTH_SHORT).show();
-                }
-            });
-        }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(LoginActivity.this, "Error checking admin status", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }*/
 }

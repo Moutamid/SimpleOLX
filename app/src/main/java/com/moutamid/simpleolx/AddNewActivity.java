@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -36,6 +37,7 @@ public class AddNewActivity extends AppCompatActivity {
     private ImagePagerAdapter imagePagerAdapter;
     private List<String> selectedImages = new ArrayList<>();
     private Button btnAddImages, btnPreview, btnSubmit;
+    private ImageView uploadBtn;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -43,6 +45,7 @@ public class AddNewActivity extends AppCompatActivity {
         setContentView(R.layout.add_new_activity);
 
         viewPager = findViewById(R.id.viewPagerImages);
+        uploadBtn = findViewById(R.id.uploadImageView);
         imagePagerAdapter = new ImagePagerAdapter(this, selectedImages);
         viewPager.setAdapter(imagePagerAdapter);
 
@@ -145,6 +148,16 @@ public class AddNewActivity extends AppCompatActivity {
             }
         });
 
+        uploadBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+                intent.setType("image/*");
+                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+                startActivityForResult(intent, REQUEST_CODE_IMAGES);
+            }
+        });
+
         btnPreview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -165,20 +178,24 @@ public class AddNewActivity extends AppCompatActivity {
         });
     }
 
-        protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data){
-            super.onActivityResult(requestCode, resultCode, data);
-            if (requestCode == REQUEST_CODE_IMAGES && resultCode == RESULT_OK && data != null) {
-                ClipData clipData = data.getClipData();
-                if (clipData != null) {
-                    for (int i = 0; i < clipData.getItemCount(); i++) {
-                        Uri imageUri = clipData.getItemAt(i).getUri();
-                        selectedImages.add(imageUri.toString());
-                    }
-                } else if (data.getData() != null) {
-                    Uri imageUri = data.getData();
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_IMAGES && resultCode == RESULT_OK && data != null) {
+            viewPager.setVisibility(View.VISIBLE);
+            uploadBtn.setVisibility(View.GONE);
+            btnAddImages.setVisibility(View.VISIBLE);
+
+            ClipData clipData = data.getClipData();
+            if (clipData != null) {
+                for (int i = 0; i < clipData.getItemCount(); i++) {
+                    Uri imageUri = clipData.getItemAt(i).getUri();
                     selectedImages.add(imageUri.toString());
                 }
-                imagePagerAdapter.notifyDataSetChanged();
+            } else if (data.getData() != null) {
+                Uri imageUri = data.getData();
+                selectedImages.add(imageUri.toString());
             }
+            imagePagerAdapter.notifyDataSetChanged();
         }
     }
+}

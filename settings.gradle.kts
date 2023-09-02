@@ -3,6 +3,7 @@ pluginManagement {
         google()
         mavenCentral()
         gradlePluginPortal()
+        jcenter()
     }
 }
 dependencyResolutionManagement {
@@ -10,9 +11,10 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        jcenter()
     }
 }
 
-rootProject.name = "Simple OLX"
+rootProject.name = "Markeety"
 include(":app")
  
