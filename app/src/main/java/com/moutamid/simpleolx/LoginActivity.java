@@ -64,7 +64,7 @@ public class LoginActivity extends AppCompatActivity {
             auth().signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
                     FirebaseUser user = auth().getCurrentUser();
-                    if (user != null && user.isEmailVerified()) {
+//                    if (user != null && user.isEmailVerified()) {
 
                         if (auth().getCurrentUser().getEmail().equals("admin@simpleolx.com")) {
                             Stash.put(Constants.IS_ADMIN, true);
@@ -74,16 +74,15 @@ public class LoginActivity extends AppCompatActivity {
                             startActivity(intent);
                         } else {
                             Stash.put(Constants.IS_ADMIN, false);
-                            Intent intent = new Intent(LoginActivity.this, SellerHomeActivity.class);
+                            Intent intent = new Intent(LoginActivity.this, ExploreAdsActivity.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             finish();
                             startActivity(intent);
                         }
-
-                    } else {
-                        Constants.auth().signOut();
-                        Toast.makeText(this, "Please verify your email first.", Toast.LENGTH_SHORT).show();
-                    }
+//                    } else {
+//                        Constants.auth().signOut();
+//                        Toast.makeText(this, "Please verify your email first.", Toast.LENGTH_SHORT).show();
+//                    }
                 } else {
                     Toast.makeText(this, "Login failed: " + Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
                 }

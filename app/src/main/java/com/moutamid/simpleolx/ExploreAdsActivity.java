@@ -3,18 +3,25 @@ package com.moutamid.simpleolx;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.Spinner;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
+import com.moutamid.simpleolx.User.Adapter.CategroyAdapter;
+import com.moutamid.simpleolx.User.Adapter.ItemsAdapter;
+import com.moutamid.simpleolx.User.AllItemsActivity;
+import com.moutamid.simpleolx.helper.Config;
+import com.moutamid.simpleolx.helper.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,82 +29,74 @@ import java.util.List;
 public class ExploreAdsActivity extends AppCompatActivity {
 
     private static final String TAG = "ExploreAdsActivity";
-    private Spinner categorySpinner;
-    private ListView adListView;
-    private ArrayAdapter<String> categoryAdapter;
-    private List<String> imageUrls;
-    private AdListAdapter adListAdapter;
+    //    private Spinner categorySpinner;
+    private RecyclerView adListView;
+
+    private ItemsAdapter adListAdapter;
     private DatabaseReference adsRef;
+    RecyclerView content_rcv;
+    public List<CategoryName> categoryNameList = new ArrayList<>();
+    public List<AdModel> adModelArrayList = new ArrayList<>();
+    CategroyAdapter categroyAdapter;
+    TextView see_store;
+    ImageView settings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_explore_ads);
 
-        categorySpinner = findViewById(R.id.category_spinner);
+        see_store = findViewById(R.id.see_store);
+        settings = findViewById(R.id.settings);
+        content_rcv = findViewById(R.id.categories);
+        content_rcv.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
+        categroyAdapter = new CategroyAdapter(this, categoryNameList);
+        content_rcv.setAdapter(categroyAdapter);
+        Config.checkApp(ExploreAdsActivity.this);
+        if (Config.isNetworkAvailable(ExploreAdsActivity.this)) {
+            fetchCategories();
+
+        } else {
+            Toast.makeText(ExploreAdsActivity.this, "No network connection available.", Toast.LENGTH_SHORT).show();
+        }
         adListView = findViewById(R.id.ad_listview);
-
-        adListAdapter = new AdListAdapter(this);
+        adListView.setLayoutManager(new GridLayoutManager(this, 2));
+        adListAdapter = new ItemsAdapter(this, adModelArrayList);
         adListView.setAdapter(adListAdapter);
-
-        categoryAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item);
-        categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        categorySpinner.setAdapter(categoryAdapter);
-
-        fetchCategories();
-
         adsRef = Constants.databaseReference().child("Ads");
-
-        adListAdapter.setOnItemClickListener(new AdListAdapter.OnItemClickListener() {
+        fetchAllAds();
+        see_store.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemClick(AdModel selectedAd) {
-                Intent intent = new Intent(ExploreAdsActivity.this, AdDetailActivity.class);
-                intent.putExtra("title", selectedAd.getTitle());
-                intent.putExtra("category", selectedAd.getCategory());
-                intent.putExtra("description", selectedAd.getDescription());
-                intent.putExtra("contact", selectedAd.getContact());
-
-                ArrayList<String> imageUrls = new ArrayList<>(selectedAd.getImages());
-                intent.putStringArrayListExtra("images", imageUrls);
-
-                startActivity(intent);
+            public void onClick(View view) {
+                startActivity(new Intent(ExploreAdsActivity.this, AllItemsActivity.class));
             }
         });
-
-        categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        settings.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String selectedCategory = categoryAdapter.getItem(position);
-                if ("All Categories".equals(selectedCategory)) {
-                    fetchAllAds();
+            public void onClick(View view) {
+                if (com.moutamid.simpleolx.Constants.auth().getCurrentUser() != null) {
+                    startActivity(new Intent(ExploreAdsActivity.this, SellerHomeActivity.class));
                 } else {
-                    fetchAdsByCategory(selectedCategory);
+                    Toast.makeText(ExploreAdsActivity.this, "Please Login", Toast.LENGTH_SHORT).show();
                 }
             }
 
-            public void onNothingSelected(AdapterView<?> parent) {
-                fetchAllAds();
-            }
         });
     }
 
     private void fetchCategories() {
-        DatabaseReference categoriesRef = Constants.databaseReference().child("Categories");
 
-        categoriesRef.addValueEventListener(new ValueEventListener() {
+        Constants.CategoryReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                List<String> categories = new ArrayList<>();
 
                 for (DataSnapshot categorySnapshot : snapshot.getChildren()) {
-                    String categoryName = categorySnapshot.getValue(String.class);
-                    categories.add(categoryName);
+                    CategoryName value = categorySnapshot.getValue(CategoryName.class);
+                    categoryNameList.add(value);
                 }
 
-                categoryAdapter.clear();
-                categoryAdapter.add("All Categories");
-                categoryAdapter.addAll(categories);
-                categoryAdapter.notifyDataSetChanged();
+
+                categroyAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -105,37 +104,18 @@ public class ExploreAdsActivity extends AppCompatActivity {
             }
         });
     }
-    private void fetchAdsByCategory(String category) {
-        adsRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                adListAdapter.clear();
 
-                for (DataSnapshot adSnapshot : snapshot.getChildren()) {
-                    AdModel adModel = adSnapshot.getValue(AdModel.class);
-                        if (adModel.isApproved() && adModel.getCategory().equals(category)) {
-                            adListAdapter.add(adModel);
-                        }
-                }
-                adListAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        });
-    }
 
     private void fetchAllAds() {
         adsRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                adListAdapter.clear();
+                adModelArrayList.clear();
 
                 for (DataSnapshot adSnapshot : snapshot.getChildren()) {
                     AdModel adModel = adSnapshot.getValue(AdModel.class);
                         if (adModel.isApproved()) {
-                            adListAdapter.add(adModel);
+                            adModelArrayList.add(adModel);
                     }
                 }
 

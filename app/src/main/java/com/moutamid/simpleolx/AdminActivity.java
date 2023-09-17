@@ -3,7 +3,6 @@ package com.moutamid.simpleolx;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
@@ -18,12 +17,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.moutamid.simpleolx.Admin.Activities.AddCategoryActivity;
+import com.moutamid.simpleolx.User.Adapter.AdListAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -127,44 +126,9 @@ public class AdminActivity extends AppCompatActivity {
     }
 
     private void showAddCategoryDialog() {
-        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
-        dialogBuilder.setTitle("Add Category");
-
-        final EditText inputCategory = new EditText(this);
-        dialogBuilder.setView(inputCategory);
-
-        dialogBuilder.setPositiveButton("Add", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                String categoryName = inputCategory.getText().toString().trim();
-                addCategoryToDatabase(categoryName);
-            }
-        });
-
-        dialogBuilder.setNegativeButton("Cancel", null);
-
-        AlertDialog dialog = dialogBuilder.create();
-        dialog.show();
+       startActivity(new Intent(this, AddCategoryActivity.class));
     }
 
-    private void addCategoryToDatabase(String categoryName) {
-        if (!TextUtils.isEmpty(categoryName)) {
-            DatabaseReference categoriesRef = Constants.databaseReference().child("Categories");
-            String categoryId = categoriesRef.push().getKey();
-
-            categoriesRef.child(categoryId).setValue(categoryName)
-                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful()) {
-                                // Handle success
-                            } else {
-                                // Handle error
-                            }
-                        }
-                    });
-        }
-    }
 
     private void showRemoveCategoryDialog(String categoryName) {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);

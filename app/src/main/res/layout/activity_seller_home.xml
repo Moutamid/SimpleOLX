@@ -11,231 +11,249 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-
-        <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/ic_icon_badge" />
-
         <TextView
-            android:id="@+id/welcome_text"
+            android:id="@+id/textView3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="Welcome seller!"
-            android:textColor="@color/black"
-            android:textSize="25sp"
-            android:textStyle="bold" />
-
-        <ImageView
-            android:id="@+id/imageView3"
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_marginLeft="20dp"
             android:layout_marginTop="15dp"
-            android:src="@drawable/stepping_up" />
+            android:fontFamily="@font/texta_bold"
+            android:textColor="@color/black"
+            android:text="Dashboard"
+            android:textSize="56dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="Your dashboard"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:layout_margin="10dp"
+            android:orientation="vertical">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="All your tools in one place"
-            android:textSize="15sp" />
-
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            app:cardBackgroundColor="@color/white"
-            app:cardElevation="7dp"
-            app:strokeColor="@color/secondary"
-            app:strokeWidth="1dp">
-
-            <LinearLayout
+            <RelativeLayout
+                android:id="@+id/create_ad_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_marginTop="12dp"
+                android:background="@drawable/btn_bg"
+                android:backgroundTint="@color/white"
+                android:elevation="5dp"
+                android:onClick="switchToAddNew"
+                android:padding="15dp">
 
-                <RelativeLayout
-                    android:id="@+id/create_ad_button"
+                <ImageView
+                    android:id="@+id/qweqq"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/outline_create_24" />
+
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:onClick="switchToAddNew"
-                    android:padding="15dp">
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_toStartOf="@id/qwerqq"
+                    android:layout_toEndOf="@id/qweqq"
+                    android:fontFamily="@font/texta_bold"
+                    android:text="Create New Ad"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
 
-                    <ImageView
-                        android:id="@+id/qweqq"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/outline_create_24" />
+                <ImageView
+                    android:id="@+id/qwerqq"
+                    android:layout_width="34dp"
+                    android:layout_height="34dp"
+                    android:layout_alignParentEnd="true"
+                    android:src="@drawable/baseline_keyboard_arrow_right_24" />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="10dp"
-                        android:layout_toStartOf="@id/qwerqq"
-                        android:layout_toEndOf="@id/qweqq"
-                        android:text="Create New Ad"
-                        android:textColor="@color/black"
-                        android:textSize="18sp" />
+            </RelativeLayout>
 
-                    <ImageView
-                        android:id="@+id/qwerqq"
-                        android:layout_width="45dp"
-                        android:layout_height="45dp"
-                        android:layout_alignParentEnd="true"
-                        android:src="@drawable/baseline_keyboard_arrow_right_24" />
 
-                </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/view_edit_ads_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/btn_bg"
+                android:backgroundTint="@color/white"
+                android:elevation="5dp"
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginHorizontal="40dp"
-                    android:background="#330E0E0E" />
+                android:onClick="switchToMyAds"
+                android:padding="15dp">
 
-                <RelativeLayout
-                    android:id="@+id/view_edit_ads_button"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:onClick="switchToMyAds"
-                    android:padding="15dp">
+                <ImageView
+                    android:id="@+id/qweqqq"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/outline_remove_red_eye_24" />
 
-                    <ImageView
-                        android:id="@+id/qweqqq"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/outline_remove_red_eye_24" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="10dp"
-                        android:layout_toStartOf="@id/qwerqqq"
-                        android:layout_toEndOf="@id/qweqqq"
-                        android:text="View/Edit My Ads"
-                        android:textColor="@color/black"
-                        android:textSize="18sp" />
-
-                    <ImageView
-                        android:id="@+id/qwerqqq"
-                        android:layout_width="45dp"
-                        android:layout_height="45dp"
-                        android:layout_alignParentEnd="true"
-                        android:src="@drawable/baseline_keyboard_arrow_right_24" />
-
-                </RelativeLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginHorizontal="40dp"
-                    android:background="#330E0E0E" />
-
-                <RelativeLayout
-                    android:id="@+id/manage_account_button"
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:onClick="switchToMyAccount"
-                    android:padding="15dp">
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_toStartOf="@id/qwerqqq"
+                    android:layout_toEndOf="@id/qweqqq"
+                    android:fontFamily="@font/texta_bold"
+                    android:text="View/Edit My Ads"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
 
-                    <ImageView
-                        android:id="@+id/qwe"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/outline_account_circle_24" />
+                <ImageView
+                    android:id="@+id/qwerqqq"
+                    android:layout_width="34dp"
+                    android:layout_height="34dp"
+                    android:layout_alignParentEnd="true"
+                    android:src="@drawable/baseline_keyboard_arrow_right_24" />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="10dp"
-                        android:layout_toStartOf="@id/qwer"
-                        android:layout_toEndOf="@id/qwe"
-                        android:text="Manage account"
-                        android:textColor="@color/black"
-                        android:textSize="18sp" />
+            </RelativeLayout>
 
-                    <ImageView
-                        android:id="@+id/qwer"
-                        android:layout_width="45dp"
-                        android:layout_height="45dp"
-                        android:layout_alignParentEnd="true"
-                        android:src="@drawable/baseline_keyboard_arrow_right_24" />
 
-                </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/manage_account_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/btn_bg"
+                android:backgroundTint="@color/white"
+                android:elevation="5dp"
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginHorizontal="40dp"
-                    android:background="#330E0E0E" />
+                android:onClick="switchToMyAccount"
+                android:padding="15dp">
 
-                <RelativeLayout
-                    android:id="@+id/browse_ads_button"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:onClick="switchToExploreAds"
-                    android:padding="15dp">
+                <ImageView
+                    android:id="@+id/qwe"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/outline_account_circle_24" />
 
-                    <ImageView
-                        android:id="@+id/qweq"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/outline_feed_24" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="10dp"
-                        android:layout_toStartOf="@id/qwerq"
-                        android:layout_toEndOf="@id/qweq"
-                        android:text="Explore ads"
-                        android:textColor="@color/black"
-                        android:textSize="18sp" />
-
-                    <ImageView
-                        android:id="@+id/qwerq"
-                        android:layout_width="45dp"
-                        android:layout_height="45dp"
-                        android:layout_alignParentEnd="true"
-                        android:src="@drawable/baseline_keyboard_arrow_right_24" />
-
-                </RelativeLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginHorizontal="40dp"
-                    android:background="#330E0E0E" />
-
-                <RelativeLayout
-                    android:id="@+id/logout_button"
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:onClick="logoutId"
-                    android:padding="15dp">
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_toStartOf="@id/qwer1"
+                    android:layout_toEndOf="@id/qwe"
+                    android:text="Manage account"
+                    android:fontFamily="@font/texta_bold"
 
-                    <ImageView
-                        android:id="@+id/qweqqqq"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/outline_logout_24"
-                        app:tint="@color/red" />
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+                <ImageView
+                    android:id="@+id/qwer1"
+                    android:layout_width="34dp"
+                    android:layout_height="34dp"
+                    android:layout_alignParentEnd="true"
+                    android:src="@drawable/baseline_keyboard_arrow_right_24" />
+
+            </RelativeLayout>
+     <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/btn_bg"
+                android:backgroundTint="@color/white"
+                android:elevation="5dp"
+
+                android:onClick="report_a_problem"
+                android:padding="15dp">
+
+                <ImageView
+                    android:id="@+id/qwe8"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/outline_info_24" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_toStartOf="@id/qwer2"
+                    android:layout_toEndOf="@id/qwe8"
+                    android:text="Report a Problem"
+                    android:fontFamily="@font/texta_bold"
+
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+                <ImageView
+                    android:id="@+id/qwer2"
+                    android:layout_width="34dp"
+                    android:layout_height="34dp"
+                    android:layout_alignParentEnd="true"
+                    android:src="@drawable/baseline_keyboard_arrow_right_24" />
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/browse_ads_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/btn_bg"
+                android:backgroundTint="@color/white"
+                android:elevation="5dp"
+                android:onClick="switchToExploreAds"
+
+                android:padding="15dp"
+                android:visibility="gone">
+
+                <ImageView
+                    android:id="@+id/qweq"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/outline_feed_24" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_toStartOf="@id/qwerq"
+                    android:layout_toEndOf="@id/qweq"
+                    android:text="Explore ads"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+                <ImageView
+                    android:id="@+id/qwerq"
+                    android:layout_width="34dp"
+                    android:layout_height="34dp"
+                    android:layout_alignParentEnd="true"
+                    android:src="@drawable/baseline_keyboard_arrow_right_24" />
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/logout_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/btn_bg"
+                android:backgroundTint="@color/white"
+                android:elevation="5dp"
+                android:onClick="logoutId"
+                android:padding="15dp"
+>
+
+                <ImageView
+                    android:id="@+id/qweqqqq"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/outline_logout_24"
+                    app:tint="@color/red" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -245,22 +263,23 @@
                         android:layout_toStartOf="@id/qwerqqqq"
                         android:layout_toEndOf="@id/qweqqqq"
                         android:text="Logout"
+                        android:fontFamily="@font/texta_bold"
+
                         android:textColor="@color/red"
                         android:textSize="18sp" />
 
-                    <ImageView
-                        android:id="@+id/qwerqqqq"
-                        android:layout_width="45dp"
-                        android:layout_height="45dp"
-                        android:layout_alignParentEnd="true"
-                        android:src="@drawable/baseline_keyboard_arrow_right_24" />
+                <ImageView
+                    android:id="@+id/qwerqqqq"
+                    android:layout_width="34dp"
+                    android:layout_height="34dp"
+                    android:layout_alignParentEnd="true"
+                    android:src="@drawable/baseline_keyboard_arrow_right_24" />
 
                 </RelativeLayout>
 
             </LinearLayout>
 
 
-        </com.google.android.material.card.MaterialCardView>
 
     </LinearLayout>
 

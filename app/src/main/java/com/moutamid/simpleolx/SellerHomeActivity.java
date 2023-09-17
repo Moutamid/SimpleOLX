@@ -37,4 +37,8 @@ public class SellerHomeActivity extends AppCompatActivity {
         finish();
     }
 
+    public void report_a_problem(View view) {
+        FeedBackDialogClass cdd = new FeedBackDialogClass(SellerHomeActivity.this);
+        cdd.show();
+    }
 }

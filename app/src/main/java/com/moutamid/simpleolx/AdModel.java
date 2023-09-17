@@ -4,14 +4,32 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AdModel {
-    private String adId;
-    private String title;
-    private String category;
-    private String description;
-    private String contact;
+    public String adId;
+    public String title;
+    public String category;
+    public String description;
+    public String contact;
     private String SellerUid;
-    private ArrayList<String> images;
+    private List<String> images;
     private boolean approved;
+    String Host, Company, New_category, From_date, To_date, Time;
+
+    public AdModel(String adId, String title, String category, String description, String contact, String sellerUid, List<String> images, boolean approved, String host, String company, String new_category, String from_date, String to_date, String time) {
+        this.adId = adId;
+        this.title = title;
+        this.category = category;
+        this.description = description;
+        this.contact = contact;
+        SellerUid = sellerUid;
+        this.images = images;
+        this.approved = approved;
+        Host = host;
+        Company = company;
+        New_category = new_category;
+        From_date = from_date;
+        To_date = to_date;
+        Time = time;
+    }
 
     public AdModel() {
     }
@@ -89,6 +107,54 @@ public class AdModel {
 
     public void setAdId(String adId) {
         this.adId = adId;
+    }
+
+    public String getHost() {
+        return Host;
+    }
+
+    public void setHost(String host) {
+        Host = host;
+    }
+
+    public String getCompany() {
+        return Company;
+    }
+
+    public void setCompany(String company) {
+        Company = company;
+    }
+
+    public String getNew_category() {
+        return New_category;
+    }
+
+    public void setNew_category(String new_category) {
+        New_category = new_category;
+    }
+
+    public String getFrom_date() {
+        return From_date;
+    }
+
+    public void setFrom_date(String from_date) {
+        From_date = from_date;
+    }
+
+    public String getTo_date() {
+        return To_date;
+    }
+
+    public void setTo_date(String to_date) {
+        To_date = to_date;
+    }
+
+    public String getTime() {
+        return Time;
+    }
+
+    public void setTime(String time) {
+        Time = time;
     }
 }
 

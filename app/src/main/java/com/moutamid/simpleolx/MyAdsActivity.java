@@ -1,7 +1,6 @@
 package com.moutamid.simpleolx;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
@@ -11,6 +10,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
+import com.moutamid.simpleolx.User.Adapter.AdListAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

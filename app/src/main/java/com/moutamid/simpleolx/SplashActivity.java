@@ -14,7 +14,15 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+//if(Constants.auth().getCurrentUser()!=null)
+//{
+//    startActivity(new Intent(SplashActivity.this, ExploreAdsActivity.class));
+//
+//}
+//else
+//{
+//    startActivity(new Intent(this, HomeActivity.class));
+//}
         if (Stash.getBoolean(Constants.IS_LOGGED_IN, false)) {
 
             if (Stash.getBoolean(Constants.IS_ADMIN, false)){

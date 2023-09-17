@@ -30,7 +30,7 @@ import java.util.List;
 
 public class AddNewActivity extends AppCompatActivity {
 
-    private EditText editTitle, editDescription, editContact;
+    private EditText editTitle, editDescription, editContact, editHost,editCompany, editcategory, edit_from_date, edit_to_date, editTime;
     private Spinner spinnerCategory;
     private static final int REQUEST_CODE_IMAGES = 1;
     private ViewPager viewPager;
@@ -49,7 +49,7 @@ public class AddNewActivity extends AppCompatActivity {
         imagePagerAdapter = new ImagePagerAdapter(this, selectedImages);
         viewPager.setAdapter(imagePagerAdapter);
 
-        DatabaseReference categoriesRef = Constants.databaseReference().child("Categories");
+        DatabaseReference categoriesRef = Constants.databaseReference().child("categories");
 
         editTitle = findViewById(R.id.editTitle);
         editDescription = findViewById(R.id.editDescription);
@@ -58,6 +58,13 @@ public class AddNewActivity extends AppCompatActivity {
         btnAddImages = findViewById(R.id.btnAddImages);
         btnPreview = findViewById(R.id.btnPreview);
         btnSubmit = findViewById(R.id.btnSubmit);
+
+        editHost = findViewById(R.id.editHost);
+        editCompany = findViewById(R.id.editCompany);
+        editcategory = findViewById(R.id.editcategory);
+        edit_from_date = findViewById(R.id.edit_from_date);
+        edit_to_date = findViewById(R.id.edit_to_date);
+        editTime = findViewById(R.id.editTime);
 
         ArrayAdapter<String> categoryAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item);
         categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -71,6 +78,12 @@ public class AddNewActivity extends AppCompatActivity {
                 String description = editDescription.getText().toString().trim();
                 String contact = editContact.getText().toString().trim();
                 String category = spinnerCategory.getSelectedItem().toString();
+                String host = editHost.getText().toString().trim();
+                String comapny = editCompany.getText().toString().trim();
+                String category_new = editcategory.getText().toString().trim();
+                String from_date = edit_from_date.getText().toString().trim();
+                String to_date = edit_to_date.getText().toString().trim();
+                String time = editTime.getText().toString().trim();
                 String currentUserUid = Constants.auth().getCurrentUser().getUid();
 
                 if (TextUtils.isEmpty(title) || TextUtils.isEmpty(description) || TextUtils.isEmpty(contact)) {
@@ -101,7 +114,7 @@ public class AddNewActivity extends AppCompatActivity {
                             uploadedImages[0]++;
 
                             if (uploadedImages[0] == totalImages) {
-                                AdModel newAd = new AdModel(adKey, title, category, description, contact, currentUserUid, updatedImageUrls, false);
+                                AdModel newAd = new AdModel(adKey, title, category, description, contact, currentUserUid, updatedImageUrls, false, host, comapny, category_new, from_date, to_date, time);
                                 newAd.setSellerUid(currentUserUid);
 
                                 newAdRef.setValue(newAd);
@@ -124,8 +137,8 @@ public class AddNewActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 List<String> categories = new ArrayList<>();
                 for (DataSnapshot categorySnapshot : snapshot.getChildren()) {
-                    String categoryName = categorySnapshot.getValue(String.class);
-                    categories.add(categoryName);
+                    CategoryName categoryName = categorySnapshot.getValue(CategoryName.class);
+                    categories.add(categoryName.url);
                 }
                 categoryAdapter.addAll(categories);
                 categoryAdapter.notifyDataSetChanged();
