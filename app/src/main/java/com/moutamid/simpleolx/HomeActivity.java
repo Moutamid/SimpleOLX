@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.moutamid.simpleolx.User.Activity.ExploreAdsActivity;
+
 public class HomeActivity extends AppCompatActivity {
 
     @Override
@@ -17,16 +19,19 @@ public class HomeActivity extends AppCompatActivity {
     public void switchToMainActivity(View view) {
         Intent intent = new Intent(this, ExploreAdsActivity.class);
         startActivity(intent);
+        finish();
     }
 
     public void switchToLoginActivity(View view) {
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
+        finish();
     }
 
     public void switchToRegisterActivity(View view) {
         Intent intent = new Intent(this, RegisterActivity.class);
         startActivity(intent);
+        finish();
     }
 
 }

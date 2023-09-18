@@ -8,9 +8,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.firebase.auth.FirebaseUser;
+import com.moutamid.simpleolx.helper.Config;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -38,6 +41,7 @@ public class RegisterActivity extends AppCompatActivity {
     public void switchToLoginActivity(View view) {
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
+        finish();
     }
 
     private void signup() {
@@ -58,17 +62,24 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void createNewUser(String email, String password) {
+        Config.showProgressDialog(RegisterActivity.this);
         Constants.auth().createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         FirebaseUser user = Constants.auth().getCurrentUser();
-                        if (user != null) {
-                            sendVerificationEmail(user);
-                        }
+                        Config.showProgressDialog(RegisterActivity.this);
                         Toast.makeText(this, "Account created successfully", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(this, LoginActivity.class));
+                        finish();
                     } else {
+                        Config.dismissProgressDialog();
                         Toast.makeText(this, "Account creation failed", Toast.LENGTH_SHORT).show();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Config.showProgressDialog(RegisterActivity.this);
+
                     }
                 });
     }
@@ -77,8 +88,12 @@ public class RegisterActivity extends AppCompatActivity {
         user.sendEmailVerification()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
+                        Config.showProgressDialog(RegisterActivity.this);
+
                         Toast.makeText(this, "Verification email sent", Toast.LENGTH_SHORT).show();
                     } else {
+                        Config.showProgressDialog(RegisterActivity.this);
+
                         Toast.makeText(this, "Failed to send verification email", Toast.LENGTH_SHORT).show();
                     }
                 });

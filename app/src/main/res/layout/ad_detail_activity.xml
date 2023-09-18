@@ -1,203 +1,285 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:background="@color/primary"
-   >
+    android:background="@color/primary">
 
-    <RelativeLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:layout_marginBottom="80dp">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar_"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/secondary">
+            android:layout_height="match_parent">
 
-            <ImageView
-                android:id="@+id/backpress"
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar_"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/secondary">
+
+                <ImageView
+                    android:id="@+id/backpress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="onBack"
+                    android:src="@drawable/baseline_arrow_back_ios_new_24"
+                    app:tint="@color/white" />
+
+
+                <RelativeLayout
+                    android:id="@+id/fvt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginRight="20dp"
+
+                    >
+
+                    ]
+
+                    <ImageView
+                        android:id="@+id/favourite"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/baseline_favorite_border_24"
+                        app:tint="@color/white" />
+
+                    <ImageView
+                        android:id="@+id/unfavourite"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/baseline_favorite_24"
+                        android:visibility="gone"
+                        app:tint="@color/white" />
+
+                </RelativeLayout>
+
+                <ImageView
+                    android:id="@+id/call"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginRight="10dp"
+                    android:layout_toStartOf="@+id/fvt"
+                    android:src="@drawable/baseline_call_24"
+                    app:tint="@color/white" />
+
+                <TextView
+                    android:id="@+id/ad_detail_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginEnd="25dp"
+                    android:maxLines="1"
+                    android:paddingLeft="6dp"
+                    android:textColor="@color/white"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
+            </androidx.appcompat.widget.Toolbar>
+
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/viewPager"
+                android:layout_width="match_parent"
+                android:layout_height="190dp"
+                android:background="@color/black"
+                android:layout_marginTop="63dp" />
+
+
+            <TextView
+                android:id="@+id/name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="onBack"
-                android:src="@drawable/baseline_arrow_back_ios_new_24"
-                app:tint="@color/white" />
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="210dp"
+                android:layout_marginRight="45dp"
+                android:elevation="8dp"
+                android:shadowColor="@color/black"
+                android:shadowRadius="2"
+                android:text="Atlantis Paradise Island, Bahamas"
+                android:textColor="@color/white"
+                android:textSize="20dp"
+                android:fontFamily="@font/texta_heavy"/>
 
-            <RelativeLayout
-                android:layout_width="wrap_content"
+
+            <LinearLayout
+                android:id="@+id/lay1"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:layout_marginRight="20dp"
+                android:layout_below="@id/viewPager"
+                android:visibility="gone"
 
                 >
 
-                <ImageView
-                    android:id="@+id/favourite"
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/baseline_favorite_border_24"
-                    app:tint="@color/white" />
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="25dp"
+                    android:fontFamily="@font/texta_heavy"
+                    android:text="Category"
+                    android:textColor="#000"
+                    android:textSize="20dp" />
 
-                <ImageView
-                    android:id="@+id/unfavourite"
+                <TextView
+                    android:id="@+id/ad_detail_category"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/baseline_favorite_24"
-                    android:visibility="gone"
-                    app:tint="@color/white" />
+                    android:layout_marginLeft="23dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="25dp"
+                    android:fontFamily="@font/texta_medium"
+                    android:text="Atlantis Paradise Island, Bahamas"
+                    android:textColor="#000"
+                    android:textSize="17dp" />
+            </LinearLayout>
 
-            </RelativeLayout>
+            <LinearLayout
+                android:id="@+id/lay2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/lay1"
+                android:layout_marginTop="10dp"
+
+
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="25dp"
+                    android:fontFamily="@font/texta_heavy"
+                    android:text="Company"
+                    android:textColor="#000"
+                    android:textSize="20dp" />
+
+                <TextView
+                    android:id="@+id/company_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="25dp"
+                    android:fontFamily="@font/texta_medium"
+                    android:text="Atlantis Paradise Island, Bahamas"
+                    android:textColor="#000"
+                    android:textSize="17dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lay3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/lay2"
+
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="25dp"
+                    android:fontFamily="@font/texta_heavy"
+                    android:text="Hosted By"
+                    android:textColor="#000"
+                    android:textSize="20dp" />
+
+                <TextView
+                    android:id="@+id/host_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="25dp"
+                    android:fontFamily="@font/texta_medium"
+                    android:text="Atlantis Paradise Island, Bahamas"
+                    android:textColor="#000"
+                    android:textSize="17dp" />
+            </LinearLayout>
 
             <TextView
-                android:id="@+id/ad_detail_title"
+                android:id="@+id/lay4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginEnd="25dp"
-                android:maxLines="1"
-                android:paddingLeft="6dp"
-                android:textColor="@color/white"
-                android:textSize="18dp"
-                android:textStyle="bold" />
-        </androidx.appcompat.widget.Toolbar>
+                android:layout_below="@+id/lay3"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="25dp"
+                android:fontFamily="@font/texta_heavy"
+                android:text="Discription"
+                android:textColor="#000"
+                android:textSize="20dp" />
 
-        <androidx.viewpager.widget.ViewPager
-            android:id="@+id/viewPager"
-            android:layout_width="match_parent"
-            android:layout_height="320dp"
-            android:layout_marginTop="60dp"/>
-
-
-        <TextView
-            android:id="@+id/name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="240dp"
-            android:layout_marginRight="45dp"
-            android:elevation="8dp"
-            android:shadowColor="@color/black"
-            android:shadowRadius="2"
-            android:text="Atlantis Paradise Island, Bahamas"
-            android:textColor="@color/white"
-            android:textSize="20dp"
-            android:textStyle="bold" />
-        <TextView
-            android:id="@+id/ad_detail_category"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/name"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginRight="25dp"
-            android:elevation="8dp"
-            android:shadowColor="@color/black"
-            android:shadowRadius="1"
-            android:text="Atlantis Paradise Island, Bahamas"
-            android:textColor="#DDDDDD"
-            android:textSize="15dp"
-            android:textStyle="bold" />
+            <TextView
+                android:id="@+id/ad_detail_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lay4"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="15dp"
+                android:textAlignment="gravity"
+                android:layout_marginBottom="15dp"
+                android:text="testing"
+                android:textColor="@color/black"
+                android:textSize="15dp" />
+        </RelativeLayout>
+    </ScrollView>
 
 
-        <TextView
-            android:id="@+id/ad_detail_description"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/viewPager"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="25dp"
-            android:layout_marginEnd="15dp"
-            android:layout_marginBottom="15dp"
-            android:text="testing"
-            android:textColor="@color/black"
-            android:textSize="18dp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:visibility="visible">
 
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone">
+            android:layout_height="80dp"
+            android:layout_marginTop="25dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
 
-
-
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="16dp"
-                android:background="#E0E0E0" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="Description"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <TextView
+                android:id="@+id/btn_message"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="This is the description for the above ad. The above ad Description is defined here."
-                android:textColor="#cccccc"
-                android:textSize="16sp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_marginTop="25dp"
+                android:layout_height="50dp"
+                android:layout_margin="8dp"
                 android:layout_weight="1"
+                android:background="@drawable/edit_bg"
+                android:fontFamily="@font/texta_bold"
                 android:gravity="center"
-                android:orientation="horizontal">
+                android:text="Message"
+                android:textColor="@color/black"
+                android:textSize="17dp" />
 
-                <Button
-                    android:id="@+id/btn_call"
-                    style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="2dp"
-                    android:layout_marginEnd="2dp"
-                    android:layout_weight="0.7"
-                    android:backgroundTint="#28D146"
-                    android:drawableLeft="@drawable/baseline_call_24"
-                    android:drawableTint="@color/black"
-                    android:text="Call"
-                    android:textColor="@color/black" />
+            <TextView
+                android:id="@+id/btn_whatsapp"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_margin="8dp"
+                android:layout_weight="1"
+                android:background="@drawable/btn_bg"
+                android:backgroundTint="@color/secondary"
+                android:fontFamily="@font/texta_bold"
+                android:gravity="center"
+                android:text="WhatsApp"
+                android:textColor="@color/white"
+                android:textSize="17dp" />
 
-                <Button
-                    android:id="@+id/btn_message"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="2dp"
-                    android:layout_marginEnd="2dp"
-                    android:layout_weight="1"
-                    android:backgroundTint="@color/secondary"
-                    android:text="Message"
-                    android:textColor="@color/black" />
 
-                <Button
-                    android:id="@+id/btn_whatsapp"
-                    style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="2dp"
-                    android:layout_marginEnd="2dp"
-                    android:layout_weight="1"
-                    android:backgroundTint="#28D146"
-                    android:drawableLeft="@drawable/whatsapp"
-                    android:drawableTint="@color/black"
-                    android:text="WhatsApp"
-                    android:textColor="@color/black" />
-
-            </LinearLayout>
         </LinearLayout>
+    </LinearLayout>
 
-    </RelativeLayout>
 
-</ScrollView>
+</RelativeLayout>

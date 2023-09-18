@@ -10,15 +10,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.fxn.stash.Stash;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.ValueEventListener;
+import com.moutamid.simpleolx.Admin.Activities.AdminActivity;
+import com.moutamid.simpleolx.User.Activity.ExploreAdsActivity;
+import com.moutamid.simpleolx.helper.Config;
 
 import java.util.Objects;
 
@@ -47,6 +45,7 @@ public class LoginActivity extends AppCompatActivity {
     public void switchToRegisterActivity(View view) {
         Intent intent = new Intent(this, RegisterActivity.class);
         startActivity(intent);
+        finish();
     }
 
     private void signin() {
@@ -60,30 +59,36 @@ public class LoginActivity extends AppCompatActivity {
         } else if (password.length() < 6) {
             Toast.makeText(this, "Password must be of 6 characters", Toast.LENGTH_SHORT).show();
         } else {
-
+            Config.showProgressDialog(LoginActivity.this);
             auth().signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
                     FirebaseUser user = auth().getCurrentUser();
 //                    if (user != null && user.isEmailVerified()) {
 
-                        if (auth().getCurrentUser().getEmail().equals("admin@simpleolx.com")) {
-                            Stash.put(Constants.IS_ADMIN, true);
-                            Intent intent = new Intent(LoginActivity.this, AdminActivity.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                            finish();
-                            startActivity(intent);
-                        } else {
-                            Stash.put(Constants.IS_ADMIN, false);
-                            Intent intent = new Intent(LoginActivity.this, ExploreAdsActivity.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                            finish();
-                            startActivity(intent);
-                        }
+                    if (auth().getCurrentUser().getEmail().equals("admin@simpleolx.com")) {
+                        Stash.put(Constants.IS_ADMIN, true);
+                        Intent intent = new Intent(LoginActivity.this, AdminActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+                        Config.dismissProgressDialog();
+                        finish();
+                        startActivity(intent);
+
+                    } else {
+                        Stash.put(Constants.IS_ADMIN, false);
+                        Intent intent = new Intent(LoginActivity.this, ExploreAdsActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        Config.dismissProgressDialog();
+                        finish();
+                        startActivity(intent);
+                    }
 //                    } else {
 //                        Constants.auth().signOut();
 //                        Toast.makeText(this, "Please verify your email first.", Toast.LENGTH_SHORT).show();
 //                    }
                 } else {
+                    Config.dismissProgressDialog();
+
                     Toast.makeText(this, "Login failed: " + Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });

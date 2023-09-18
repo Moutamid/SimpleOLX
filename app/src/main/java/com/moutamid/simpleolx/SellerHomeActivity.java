@@ -6,6 +6,8 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.moutamid.simpleolx.User.Activity.ExploreAdsActivity;
+
 public class SellerHomeActivity extends AppCompatActivity {
 
     @Override

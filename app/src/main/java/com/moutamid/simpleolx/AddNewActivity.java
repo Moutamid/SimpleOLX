@@ -1,5 +1,7 @@
 package com.moutamid.simpleolx;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.ClipData;
 import android.content.Intent;
 import android.net.Uri;
@@ -11,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -24,9 +27,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.moutamid.simpleolx.User.Activity.AdDetailActivity;
+import com.moutamid.simpleolx.helper.Config;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 public class AddNewActivity extends AppCompatActivity {
 
@@ -38,6 +46,7 @@ public class AddNewActivity extends AppCompatActivity {
     private List<String> selectedImages = new ArrayList<>();
     private Button btnAddImages, btnPreview, btnSubmit;
     private ImageView uploadBtn;
+    Calendar myCalendar = Calendar.getInstance();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -70,7 +79,34 @@ public class AddNewActivity extends AppCompatActivity {
         categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerCategory.setAdapter(categoryAdapter);
         categoryAdapter.add("Select Category");
-
+        DatePickerDialog.OnDateSetListener date = (view, year, monthOfYear, dayOfMonth) -> {
+            myCalendar.set(Calendar.YEAR, year);
+            myCalendar.set(Calendar.MONTH, monthOfYear);
+            myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            String myFormat = "MM/dd/yyyy"; //In which you need put here
+            SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+            edit_from_date.setText(sdf.format(myCalendar.getTime()));
+        };
+        DatePickerDialog.OnDateSetListener date1 = (view, year, monthOfYear, dayOfMonth) -> {
+            myCalendar.set(Calendar.YEAR, year);
+            myCalendar.set(Calendar.MONTH, monthOfYear);
+            myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            String myFormat = "MM/dd/yyyy"; //In which you need put here
+            SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+            edit_to_date.setText(sdf.format(myCalendar.getTime()));
+        };
+        edit_from_date.setOnClickListener(v -> {
+            DatePickerDialog datePickerDialog = new DatePickerDialog(AddNewActivity.this, date, myCalendar
+                    .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                    myCalendar.get(Calendar.DAY_OF_MONTH));
+            datePickerDialog.show();
+        });
+        edit_to_date.setOnClickListener(v -> {
+            DatePickerDialog datePickerDialog = new DatePickerDialog(AddNewActivity.this, date1, myCalendar
+                    .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                    myCalendar.get(Calendar.DAY_OF_MONTH));
+            datePickerDialog.show();
+        });
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -91,6 +127,7 @@ public class AddNewActivity extends AppCompatActivity {
                     return;
                 }
 
+
                 if (selectedImages.isEmpty()) {
                     Toast.makeText(AddNewActivity.this, "Select at least one image", Toast.LENGTH_SHORT).show();
                     return;
@@ -105,6 +142,8 @@ public class AddNewActivity extends AppCompatActivity {
                 final int[] uploadedImages = {0};
 
                 for (String imageUrl : selectedImages) {
+                    Config.showProgressDialog(AddNewActivity.this);
+
                     Uri imageUri = Uri.parse(imageUrl);
                     StorageReference imageRef = FirebaseStorage.getInstance().getReference().child("images/" + imageUri.getLastPathSegment());
 
@@ -119,11 +158,8 @@ public class AddNewActivity extends AppCompatActivity {
 
                                 newAdRef.setValue(newAd);
 
-                                editTitle.setText("");
-                                editDescription.setText("");
-                                editContact.setText("");
-                                selectedImages.clear();
 
+                                Config.dismissProgressDialog();
                                 Toast.makeText(AddNewActivity.this, "Ad submitted for approval", Toast.LENGTH_SHORT).show();
                             }
                         });
@@ -149,7 +185,23 @@ public class AddNewActivity extends AppCompatActivity {
                 // Handle error
             }
         });
-
+        editTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Calendar mcurrentTime = Calendar.getInstance();
+                int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
+                int minute = mcurrentTime.get(Calendar.MINUTE);
+                TimePickerDialog mTimePicker;
+                mTimePicker = new TimePickerDialog(AddNewActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                        editTime.setText(selectedHour + ":" + selectedMinute);
+                    }
+                }, hour, minute, false);//Yes 24 hour time
+                mTimePicker.setTitle("Select Time");
+                mTimePicker.show();
+            }
+        });
 
         btnAddImages.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -185,7 +237,6 @@ public class AddNewActivity extends AppCompatActivity {
                 intent.putExtra("contact", contact);
                 intent.putExtra("category", category);
                 intent.putStringArrayListExtra("images", (ArrayList<String>) selectedImages);
-
                 startActivity(intent);
             }
         });
@@ -210,5 +261,9 @@ public class AddNewActivity extends AppCompatActivity {
             }
             imagePagerAdapter.notifyDataSetChanged();
         }
+    }
+
+    public void backPress(View view) {
+        onBackPressed();
     }
 }

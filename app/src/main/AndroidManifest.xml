@@ -14,7 +14,13 @@
         android:theme="@style/Theme.SimpleOLX"
         tools:targetApi="31">
         <activity
-            android:name=".User.AllItemsActivity"
+            android:name=".User.Activity.AllCategoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".User.Activity.FavouriteActivity"
+            android:exported="false" />
+        <activity
+            android:name=".User.Activity.AllItemsActivity"
             android:exported="false" />
         <activity
             android:name=".Admin.Activities.AddCategoryActivity"
@@ -26,7 +32,7 @@
             android:name=".EditAdActivity"
             android:exported="false" />
         <activity
-            android:name=".ExploreAdsActivity"
+            android:name=".User.Activity.ExploreAdsActivity"
             android:exported="false" />
         <activity
             android:name=".MyAccountActivity"
@@ -38,10 +44,8 @@
             android:name=".SellerHomeActivity"
             android:exported="false" />
         <activity
-            android:name=".AdminActivity"
-            android:exported="true">
-
-        </activity>
+            android:name=".Admin.Activities.AdminActivity"
+            android:exported="true" />
         <activity
             android:name=".RegisterActivity"
             android:exported="false" />
@@ -49,11 +53,11 @@
             android:name=".LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".AdDetailActivity"
+            android:name=".User.Activity.AdDetailActivity"
             android:exported="false" />
         <activity
             android:name=".HomeActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".SplashActivity"
             android:exported="true"

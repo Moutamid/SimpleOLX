@@ -20,9 +20,9 @@
     <ListView
         android:id="@+id/listViewAds"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="match_parent"
         android:layout_below="@+id/textViewAds"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="66dp"
         android:background="@color/white"
         android:divider="@android:color/darker_gray"
         android:dividerHeight="1dp" />
@@ -43,6 +43,7 @@
         android:layout_below="@id/view"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
+        android:visibility="gone"
         android:layout_marginBottom="16dp"
         android:text="Categories"
         android:textColor="@android:color/black"
@@ -53,6 +54,7 @@
         android:id="@+id/listViewCategories"
         android:layout_width="match_parent"
         android:layout_height="200dp"
+        android:visibility="gone"
         android:layout_below="@id/textViewCategories"
         android:layout_marginBottom="48dp"
         android:background="@color/white"
