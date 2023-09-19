@@ -14,6 +14,15 @@
         android:theme="@style/Theme.SimpleOLX"
         tools:targetApi="31">
         <activity
+            android:name=".Admin.Activities.AdRequestActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Admin.Activities.AllCategoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Admin.Activities.AdminPanelActivity"
+            android:exported="false" />
+        <activity
             android:name=".User.Activity.AllCategoryActivity"
             android:exported="false" />
         <activity

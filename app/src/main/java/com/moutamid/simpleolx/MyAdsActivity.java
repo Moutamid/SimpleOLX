@@ -10,7 +10,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
-import com.moutamid.simpleolx.User.Adapter.AdListAdapter;
+import com.moutamid.simpleolx.Admin.Adapter.AdListAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

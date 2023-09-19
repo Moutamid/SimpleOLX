@@ -2,75 +2,29 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/primary"
-    android:padding="16dp">
-
-    <TextView
-        android:id="@+id/textViewAds"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="16dp"
-        android:text="Ads"
-        android:textColor="@android:color/black"
-        android:textSize="24sp"
-        android:textStyle="bold" />
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/primary">
 
     <ListView
         android:id="@+id/listViewAds"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/textViewAds"
-        android:layout_marginBottom="66dp"
+        android:layout_marginBottom="16dp"
         android:background="@color/white"
         android:divider="@android:color/darker_gray"
         android:dividerHeight="1dp" />
-
-    <View
-        android:id="@+id/view"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_below="@id/listViewAds"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
-        android:background="@android:color/darker_gray" />
-
     <TextView
-        android:id="@+id/textViewCategories"
+        android:id="@+id/not_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/view"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
-        android:visibility="gone"
-        android:layout_marginBottom="16dp"
-        android:text="Categories"
-        android:textColor="@android:color/black"
-        android:textSize="24sp"
-        android:textStyle="bold" />
-
-    <ListView
-        android:id="@+id/listViewCategories"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:visibility="gone"
-        android:layout_below="@id/textViewCategories"
-        android:layout_marginBottom="48dp"
-        android:background="@color/white"
-        android:divider="@android:color/darker_gray"
-        android:dividerHeight="1dp"
-        android:paddingTop="8dp" />
-
-    <Button
-        android:id="@+id/btnAddCategory"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
-        android:backgroundTint="@color/secondary"
-        android:text="Add category"
-        android:textColor="@android:color/white" />
-
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="55dp"
+        android:fontFamily="@font/texta_bold"
+        android:text="Not Added yet"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </RelativeLayout>

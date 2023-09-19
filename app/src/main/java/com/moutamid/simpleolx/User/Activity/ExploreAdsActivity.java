@@ -29,6 +29,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.moutamid.simpleolx.AdModel;
 import com.moutamid.simpleolx.CategoryName;
+import com.moutamid.simpleolx.LoginActivity;
 import com.moutamid.simpleolx.R;
 import com.moutamid.simpleolx.SellerHomeActivity;
 import com.moutamid.simpleolx.User.Adapter.CategroyAdapter;
@@ -154,7 +155,7 @@ public class ExploreAdsActivity extends AppCompatActivity {
                 if (com.moutamid.simpleolx.Constants.auth().getCurrentUser() != null) {
                     startActivity(new Intent(ExploreAdsActivity.this, SellerHomeActivity.class));
                 } else {
-                    Toast.makeText(ExploreAdsActivity.this, "Please Login", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(ExploreAdsActivity.this, LoginActivity.class));
                 }
             }
 
@@ -235,5 +236,11 @@ public class ExploreAdsActivity extends AppCompatActivity {
             // list to our adapter class.
             adListAdapter.filterList(filteredlist);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finishAffinity();
     }
 }

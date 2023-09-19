@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.fxn.stash.Stash;
 import com.moutamid.simpleolx.Admin.Activities.AdminActivity;
+import com.moutamid.simpleolx.Admin.Activities.AdminPanelActivity;
 import com.moutamid.simpleolx.User.Activity.ExploreAdsActivity;
 
 public class SplashActivity extends AppCompatActivity {
@@ -18,7 +19,7 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         if (Constants.auth().getCurrentUser() != null) {
             if (Stash.getBoolean(Constants.IS_ADMIN, false)) {
-                startActivity(new Intent(SplashActivity.this, AdminActivity.class));
+                startActivity(new Intent(SplashActivity.this, AdminPanelActivity.class));
             } else {
                 startActivity(new Intent(SplashActivity.this, ExploreAdsActivity.class));
             }

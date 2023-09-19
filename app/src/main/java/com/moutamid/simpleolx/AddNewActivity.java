@@ -52,14 +52,11 @@ public class AddNewActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_new_activity);
-
         viewPager = findViewById(R.id.viewPagerImages);
         uploadBtn = findViewById(R.id.uploadImageView);
         imagePagerAdapter = new ImagePagerAdapter(this, selectedImages);
         viewPager.setAdapter(imagePagerAdapter);
-
         DatabaseReference categoriesRef = Constants.databaseReference().child("categories");
-
         editTitle = findViewById(R.id.editTitle);
         editDescription = findViewById(R.id.editDescription);
         editContact = findViewById(R.id.editContact);
@@ -67,7 +64,6 @@ public class AddNewActivity extends AppCompatActivity {
         btnAddImages = findViewById(R.id.btnAddImages);
         btnPreview = findViewById(R.id.btnPreview);
         btnSubmit = findViewById(R.id.btnSubmit);
-
         editHost = findViewById(R.id.editHost);
         editCompany = findViewById(R.id.editCompany);
         editcategory = findViewById(R.id.editcategory);
@@ -122,7 +118,7 @@ public class AddNewActivity extends AppCompatActivity {
                 String time = editTime.getText().toString().trim();
                 String currentUserUid = Constants.auth().getCurrentUser().getUid();
 
-                if (TextUtils.isEmpty(title) || TextUtils.isEmpty(description) || TextUtils.isEmpty(contact)) {
+                if (TextUtils.isEmpty(title) || TextUtils.isEmpty(description) || TextUtils.isEmpty(contact)|| TextUtils.isEmpty(host)|| TextUtils.isEmpty(comapny)|| TextUtils.isEmpty(category_new)|| TextUtils.isEmpty(from_date)|| TextUtils.isEmpty(to_date)|| TextUtils.isEmpty(time)) {
                     Toast.makeText(AddNewActivity.this, "Fill All The Fields", Toast.LENGTH_SHORT).show();
                     return;
                 }

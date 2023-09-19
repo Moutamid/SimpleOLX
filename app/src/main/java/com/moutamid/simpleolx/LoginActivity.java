@@ -10,9 +10,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.fxn.stash.Stash;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.moutamid.simpleolx.Admin.Activities.AdminActivity;
 import com.moutamid.simpleolx.User.Activity.ExploreAdsActivity;
@@ -92,6 +96,24 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(this, "Login failed: " + Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });
+        }
+    }
+
+    public void forgotPassword(View view) {
+        String email = loginEmail.getText().toString().trim();
+
+        if (email.isEmpty()) {
+            Toast.makeText(this, "Please enter email & password", Toast.LENGTH_SHORT).show();
+        } else {
+            FirebaseAuth.getInstance().sendPasswordResetEmail(email)
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(LoginActivity.this, "Check your mail (" + email + ") to reset password", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
         }
     }
 

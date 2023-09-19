@@ -1,4 +1,4 @@
-package com.moutamid.simpleolx.User.Adapter;
+package com.moutamid.simpleolx.Admin.Adapter;
 
 import android.content.ContentResolver;
 import android.content.Context;
@@ -88,6 +88,12 @@ public class AdListAdapter extends ArrayAdapter<AdModel> {
                 editIntent.putExtra("category", adModel.getCategory());
                 editIntent.putExtra("description", adModel.getDescription());
                 editIntent.putExtra("contact", adModel.getContact());
+                editIntent.putExtra("host", adModel.getHost());
+                editIntent.putExtra("company", adModel.getCompany());
+                editIntent.putExtra("category", adModel.getNew_category());
+                editIntent.putExtra("from_date", adModel.getFrom_date());
+                editIntent.putExtra("to_date", adModel.getTo_date());
+                editIntent.putExtra("time", adModel.getTime());
                 editIntent.putStringArrayListExtra("images", (ArrayList<String>) adModel.getImages());
                 getContext().startActivity(editIntent);
             }

@@ -30,13 +30,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
+
             android:orientation="vertical">
 
             <RelativeLayout
                 android:id="@+id/create_ad_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
+                android:layout_margin="12dp"
                 android:background="@drawable/btn_bg"
                 android:backgroundTint="@color/white"
                 android:elevation="5dp"
@@ -243,6 +244,7 @@
                 android:background="@drawable/btn_bg"
                 android:backgroundTint="@color/white"
                 android:elevation="5dp"
+                android:layout_marginBottom="30dp"
                 android:onClick="logoutId"
                 android:padding="15dp"
 >
