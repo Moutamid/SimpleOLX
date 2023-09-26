@@ -17,6 +17,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.fxn.stash.Stash;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseUser;
@@ -84,6 +85,7 @@ public class AdListAdapter extends ArrayAdapter<AdModel> {
             @Override
             public void onClick(View v) {
                 Intent editIntent = new Intent(getContext(), EditAdActivity.class);
+                Stash.put("EditAd", adModel);
                 editIntent.putExtra("title", adModel.getTitle());
                 editIntent.putExtra("category", adModel.getCategory());
                 editIntent.putExtra("description", adModel.getDescription());

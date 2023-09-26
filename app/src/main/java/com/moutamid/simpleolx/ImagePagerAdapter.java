@@ -2,6 +2,7 @@ package com.moutamid.simpleolx;
 
 import android.content.Context;
 import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +27,9 @@ public class ImagePagerAdapter extends PagerAdapter {
     @NonNull
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
+
         View view = LayoutInflater.from(context).inflate(R.layout.item_image, container, false);
+        Log.d("images", imageUrls.get(position)+"abc" );
         ImageView imageView = view.findViewById(R.id.imageView);
         Glide.with(context).load(Uri.parse(imageUrls.get(position))).into(imageView);
         container.addView(view);

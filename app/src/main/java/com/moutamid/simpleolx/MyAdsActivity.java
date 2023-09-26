@@ -1,6 +1,7 @@
 package com.moutamid.simpleolx;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
@@ -60,8 +61,12 @@ public class MyAdsActivity extends AppCompatActivity {
 
                 // Iterate through the retrieved ads and add them to the list
                 for (DataSnapshot adSnapshot : snapshot.getChildren()) {
+
+
                     AdModel adModel = adSnapshot.getValue(AdModel.class);
-                    sellerAdsList.add(adModel);
+                    if (adModel.isApproved()) {
+                        sellerAdsList.add(adModel);
+                    }
                 }
 
                 // Update the adapter's data and notify it to refresh the UI
@@ -75,5 +80,9 @@ public class MyAdsActivity extends AppCompatActivity {
                 // Handle any errors or exceptions here
             }
         });
+    }
+
+    public void backPress(View view) {
+        onBackPressed();
     }
 }

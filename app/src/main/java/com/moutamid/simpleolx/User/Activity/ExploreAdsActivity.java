@@ -221,7 +221,7 @@ public class ExploreAdsActivity extends AppCompatActivity {
                 filteredlist.add(item);
             } else if (item.getCompany().toLowerCase().contains(text.toLowerCase())) {
                 filteredlist.add(item);
-            } else if (item.getHost().toLowerCase().contains(text.toLowerCase())) {
+            }else if (item.getHost().toLowerCase().contains(text.toLowerCase())) {
                 filteredlist.add(item);
             }
         }

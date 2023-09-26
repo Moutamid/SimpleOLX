@@ -5,7 +5,18 @@
     android:orientation="vertical"
     android:padding="16dp"
     android:background="@color/primary">
-
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="15dp"
+        android:fontFamily="@font/texta_bold"
+        android:text="   My Ads"
+        android:textColor="@color/black"
+        android:onClick="backPress"
+        android:drawableStart="@drawable/baseline_arrow_back_ios_new_24"
+        android:textSize="36dp" />
     <ListView
         android:id="@+id/seller_ads_list"
         android:layout_width="match_parent"

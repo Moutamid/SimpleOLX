@@ -9,12 +9,14 @@ public class AdModel {
     public String category;
     public String description;
     public String contact;
+    public String city;
+    public String province;
     private String SellerUid;
     private List<String> images;
     private boolean approved;
     String Host, Company, New_category, From_date, To_date, Time;
 
-    public AdModel(String adId, String title, String category, String description, String contact, String sellerUid, List<String> images, boolean approved, String host, String company, String new_category, String from_date, String to_date, String time) {
+    public AdModel(String adId, String title, String category, String description, String contact, String sellerUid, List<String> images, boolean approved, String host, String company, String new_category, String from_date, String to_date, String time, String city, String province) {
         this.adId = adId;
         this.title = title;
         this.category = category;
@@ -29,6 +31,8 @@ public class AdModel {
         From_date = from_date;
         To_date = to_date;
         Time = time;
+        this.city = city;
+        this.province = province;
     }
 
     public AdModel() {
@@ -155,6 +159,22 @@ public class AdModel {
 
     public void setTime(String time) {
         Time = time;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
     }
 }
 

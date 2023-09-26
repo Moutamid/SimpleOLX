@@ -2,6 +2,7 @@ package com.moutamid.simpleolx;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,6 +10,7 @@ import com.fxn.stash.Stash;
 import com.moutamid.simpleolx.Admin.Activities.AdminActivity;
 import com.moutamid.simpleolx.Admin.Activities.AdminPanelActivity;
 import com.moutamid.simpleolx.User.Activity.ExploreAdsActivity;
+import android.view.WindowManager;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -17,6 +19,8 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         if (Constants.auth().getCurrentUser() != null) {
             if (Stash.getBoolean(Constants.IS_ADMIN, false)) {
                 startActivity(new Intent(SplashActivity.this, AdminPanelActivity.class));

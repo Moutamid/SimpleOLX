@@ -18,7 +18,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.moutamid.simpleolx.Admin.Activities.AdminActivity;
+import com.moutamid.simpleolx.Admin.Activities.AdminPanelActivity;
 import com.moutamid.simpleolx.User.Activity.ExploreAdsActivity;
 import com.moutamid.simpleolx.helper.Config;
 
@@ -71,7 +71,8 @@ public class LoginActivity extends AppCompatActivity {
 
                     if (auth().getCurrentUser().getEmail().equals("admin@simpleolx.com")) {
                         Stash.put(Constants.IS_ADMIN, true);
-                        Intent intent = new Intent(LoginActivity.this, AdminActivity.class);
+
+                        Intent intent = new Intent(LoginActivity.this, AdminPanelActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
                         Config.dismissProgressDialog();
