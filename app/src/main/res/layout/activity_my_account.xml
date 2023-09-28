@@ -5,14 +5,23 @@
     android:background="@color/primary"
     android:orientation="vertical"
     android:padding="16dp">
+    <ImageView
+        android:id="@+id/qwerqq"
+        android:layout_width="34dp"
+        android:rotation="180"
+        android:onClick="backPress"
+        android:layout_height="34dp"
+        android:layout_alignParentEnd="true"
+        android:src="@drawable/baseline_keyboard_arrow_right_24" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="20dp"
-android:fontFamily="@font/texta_bold"        android:text="Update Profile"
+android:fontFamily="@font/texta_heavy"        android:text="Update Profile"
         android:textColor="@color/black"
+        android:layout_marginTop="10dp"
         android:textSize="28sp"
         android:textStyle="bold" />
 
@@ -63,7 +72,7 @@ android:fontFamily="@font/texta_bold"        android:text="Update Profile"
         android:layout_marginBottom="20dp"
         android:text="Change Password"
         android:textColor="@color/black"
-        android:fontFamily="@font/texta_bold"
+        android:fontFamily="@font/texta_heavy"
         android:textSize="28sp"
         android:textStyle="bold" />
 

@@ -6,83 +6,62 @@ import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
 
+import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.moutamid.simpleolx.Admin.Adapter.AdListAdapter;
+import com.moutamid.simpleolx.Admin.Adapter.MyAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MyAdsActivity extends AppCompatActivity {
 
-    private ListView sellerAdsListView;
-    private List<AdModel> sellerAdsList;
-    private AdListAdapter sellerAdsAdapter;
-    private DatabaseReference adsRef;
+    TabLayout tabLayout;
+    ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.my_ads_activity);
+        setContentView(R.layout.activity_ad_request);
+        tabLayout = (TabLayout) findViewById(R.id.tabLayout);
+        viewPager = (ViewPager) findViewById(R.id.viewPager);
 
-        // Initialize views and adapter
-        initializeViewsAndAdapter();
+        tabLayout.addTab(tabLayout.newTab().setText("Pending"));
+        tabLayout.addTab(tabLayout.newTab().setText("Accepted"));
+        tabLayout.addTab(tabLayout.newTab().setText("Rejected"));
+        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
-        // Fetch and display seller ads
-        fetchAndDisplaySellerAds();
-    }
+        final com.moutamid.simpleolx.Admin.Adapter.MyAdapter adapter = new MyAdapter(this, getSupportFragmentManager(), tabLayout.getTabCount());
+        viewPager.setAdapter(adapter);
 
-    private void initializeViewsAndAdapter() {
-        // Find ListView and set up adapter
-        sellerAdsListView = findViewById(R.id.seller_ads_list);
-        sellerAdsAdapter = new AdListAdapter(this, Constants.auth().getCurrentUser().getUid());
-        sellerAdsListView.setAdapter(sellerAdsAdapter);
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
-        // Initialize the sellerAdsList
-        sellerAdsList = new ArrayList<>();
-    }
-
-    private void fetchAndDisplaySellerAds() {
-        // Get a reference to the "Ads" section in the database
-        adsRef = Constants.databaseReference().child("Ads");
-
-        // Get the current user's UID
-        String currentUserUid = Constants.auth().getCurrentUser().getUid();
-
-        // Query the ads belonging to the current user
-        adsRef.orderByChild("sellerUid").equalTo(currentUserUid).addListenerForSingleValueEvent(new ValueEventListener() {
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                // Clear the existing list before adding new ads
-                sellerAdsList.clear();
-
-                // Iterate through the retrieved ads and add them to the list
-                for (DataSnapshot adSnapshot : snapshot.getChildren()) {
-
-
-                    AdModel adModel = adSnapshot.getValue(AdModel.class);
-                    if (adModel.isApproved()) {
-                        sellerAdsList.add(adModel);
-                    }
-                }
-
-                // Update the adapter's data and notify it to refresh the UI
-                sellerAdsAdapter.clear();
-                sellerAdsAdapter.addAll(sellerAdsList);
-                sellerAdsAdapter.notifyDataSetChanged();
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                // Handle any errors or exceptions here
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
             }
         });
+
+
     }
 
-    public void backPress(View view) {
+    public void back(View view) {
         onBackPressed();
     }
 }

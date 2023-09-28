@@ -101,8 +101,8 @@ public class AdListAdapter extends ArrayAdapter<AdModel> {
             }
         });
 
-        Button approveBtn = convertView.findViewById(R.id.approveBtn);
-        Button disapproveBtn = convertView.findViewById(R.id.disapproveBtn);
+        ImageView approveBtn = convertView.findViewById(R.id.approveBtn);
+        ImageView disapproveBtn = convertView.findViewById(R.id.disapproveBtn);
 
         DatabaseReference adminRef = Constants.databaseReference().child("Admins");
         FirebaseUser currentUser = Constants.auth().getCurrentUser();
@@ -133,9 +133,9 @@ public class AdListAdapter extends ArrayAdapter<AdModel> {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    boolean isApproved = dataSnapshot.child("approved").getValue(Boolean.class);
+                    String isApproved = dataSnapshot.child("approved").getValue().toString();
 
-                    if (isApproved) {
+                    if (isApproved.equals("accepted")) {
                         approveBtn.setVisibility(View.GONE);
                     } else {
                         approveBtn.setVisibility(View.VISIBLE);
@@ -152,7 +152,7 @@ public class AdListAdapter extends ArrayAdapter<AdModel> {
         approveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                adsRef.child(adId).child("approved").setValue(true)
+                adsRef.child(adId).child("approved").setValue("accepted")
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
@@ -172,7 +172,7 @@ public class AdListAdapter extends ArrayAdapter<AdModel> {
         disapproveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                adsRef.child(adId).removeValue()
+                adsRef.child(adId).child("approved").setValue("rejected")
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {

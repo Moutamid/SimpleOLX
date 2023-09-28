@@ -13,10 +13,10 @@ public class AdModel {
     public String province;
     private String SellerUid;
     private List<String> images;
-    private boolean approved;
+    private String approved;
     String Host, Company, New_category, From_date, To_date, Time;
 
-    public AdModel(String adId, String title, String category, String description, String contact, String sellerUid, List<String> images, boolean approved, String host, String company, String new_category, String from_date, String to_date, String time, String city, String province) {
+    public AdModel(String adId, String title, String category, String description, String contact, String sellerUid, List<String> images, String approved, String host, String company, String new_category, String from_date, String to_date, String time, String city, String province) {
         this.adId = adId;
         this.title = title;
         this.category = category;
@@ -38,7 +38,7 @@ public class AdModel {
     public AdModel() {
     }
 
-    public AdModel(String adId, String title, String category, String description, String contact, String SellerUid, List<String> images, boolean approved) {
+    public AdModel(String adId, String title, String category, String description, String contact, String SellerUid, List<String> images, String approved) {
         this.adId = adId;
         this.title = title;
         this.description = description;
@@ -89,11 +89,11 @@ public class AdModel {
         this.contact = contact;
     }
 
-    public boolean isApproved() {
+    public String isApproved() {
         return approved;
     }
 
-    public void setApproved(boolean approved) {
+    public void setApproved(String approved) {
         this.approved = approved;
     }
 

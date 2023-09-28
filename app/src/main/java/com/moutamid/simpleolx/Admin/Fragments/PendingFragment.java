@@ -14,6 +14,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.fxn.stash.Stash;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -45,7 +46,7 @@ public class PendingFragment extends Fragment {
         adsRef = Constants.databaseReference().child("Ads");
         adListAdapter = new AdListAdapter(getContext());
         listView.setAdapter(adListAdapter);
-        Query query = adsRef.orderByChild("approved").equalTo(false);
+        Query query = adsRef.orderByChild("approved").equalTo("pending");
         Dialog lodingbar = new Dialog(getContext());
         lodingbar.setContentView(R.layout.loading);
         Objects.requireNonNull(lodingbar.getWindow()).setBackgroundDrawable(new ColorDrawable(UCharacter.JoiningType.TRANSPARENT));
@@ -56,12 +57,10 @@ public class PendingFragment extends Fragment {
             @Override
             public void onItemClick(AdModel selectedAd) {
                 Intent intent = new Intent(getContext(), AdDetailActivity.class);
-                intent.putExtra("title", selectedAd.getTitle());
-                intent.putExtra("category", selectedAd.getCategory());
-                intent.putExtra("description", selectedAd.getDescription());
-                intent.putExtra("contact", selectedAd.getContact());
                 ArrayList<String> imageUrls = new ArrayList<>(selectedAd.getImages());
-                intent.putStringArrayListExtra("images", imageUrls);
+                Stash.put("Model", selectedAd);
+                intent.putStringArrayListExtra("images", (ArrayList<String>) imageUrls);
+
                 startActivity(intent);
             }
         });
@@ -72,8 +71,10 @@ public class PendingFragment extends Fragment {
 
                 List<AdModel> adList = new ArrayList<>();
                 for (DataSnapshot adSnapshot : snapshot.getChildren()) {
-                    AdModel adModel = adSnapshot.getValue(AdModel.class);
-                    adList.add(adModel);
+                    if (adSnapshot.exists()) {
+                        AdModel adModel = adSnapshot.getValue(AdModel.class);
+                        adList.add(adModel);
+                    }
                 }
                 if (adList.size() > 0) {
 

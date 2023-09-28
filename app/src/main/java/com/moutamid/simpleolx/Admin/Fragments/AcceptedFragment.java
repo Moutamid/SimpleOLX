@@ -45,7 +45,7 @@ public class AcceptedFragment extends Fragment {
         adsRef = Constants.databaseReference().child("Ads");
         adListAdapter = new AdListAdapter(getContext());
         listView.setAdapter(adListAdapter);
-        Query query = adsRef.orderByChild("approved").equalTo(true);
+        Query query = adsRef.orderByChild("approved").equalTo("accepted");
         Dialog lodingbar = new Dialog(getContext());
         lodingbar.setContentView(R.layout.loading);
         Objects.requireNonNull(lodingbar.getWindow()).setBackgroundDrawable(new ColorDrawable(UCharacter.JoiningType.TRANSPARENT));
@@ -72,8 +72,10 @@ public class AcceptedFragment extends Fragment {
 
                 List<AdModel> adList = new ArrayList<>();
                 for (DataSnapshot adSnapshot : snapshot.getChildren()) {
-                    AdModel adModel = adSnapshot.getValue(AdModel.class);
-                    adList.add(adModel);
+                    if (adSnapshot.exists()) {
+                        AdModel adModel = adSnapshot.getValue(AdModel.class);
+                        adList.add(adModel);
+                    }
                 }
                 if (adList.size() > 0) {
 

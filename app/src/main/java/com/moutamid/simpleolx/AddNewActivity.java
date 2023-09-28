@@ -87,7 +87,6 @@ public class AddNewActivity extends AppCompatActivity implements AdapterView.OnI
         ArrayAdapter<String> categoryAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item);
         categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerCategory.setAdapter(categoryAdapter);
-        categoryAdapter.add("Select Category");
         DatePickerDialog.OnDateSetListener date = (view, year, monthOfYear, dayOfMonth) -> {
             myCalendar.set(Calendar.YEAR, year);
             myCalendar.set(Calendar.MONTH, monthOfYear);
@@ -189,7 +188,7 @@ public class AddNewActivity extends AppCompatActivity implements AdapterView.OnI
                             uploadedImages[0]++;
 
                             if (uploadedImages[0] == totalImages) {
-                                AdModel newAd = new AdModel(adKey, title, category, description, contact, currentUserUid, updatedImageUrls, false, host, comapny, category_new, from_date, to_date, time, city_str, province_str);
+                                AdModel newAd = new AdModel(adKey, title, category, description, contact, currentUserUid, updatedImageUrls, "pending", host, comapny, category_new, from_date, to_date, time, city_str, province_str);
                                 newAd.setSellerUid(currentUserUid);
 
                                 newAdRef.setValue(newAd);

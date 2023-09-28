@@ -137,7 +137,7 @@ public class AllItemsActivity extends AppCompatActivity {
 
                 for (DataSnapshot adSnapshot : snapshot.getChildren()) {
                     AdModel adModel = adSnapshot.getValue(AdModel.class);
-                    if (adModel.isApproved()) {
+                    if (adModel.isApproved().equals("accepted")) {
                         adModelArrayList.add(adModel);
                     }
                 }
@@ -161,7 +161,7 @@ public class AllItemsActivity extends AppCompatActivity {
 
                 for (DataSnapshot adSnapshot : snapshot.getChildren()) {
                     AdModel adModel = adSnapshot.getValue(AdModel.class);
-                    if (adModel.isApproved()) {
+                    if (adModel.isApproved().equals("accepted")) {
                         adModelArrayList.add(adModel);
                     }
                 }

@@ -7,8 +7,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.moutamid.simpleolx.Admin.Fragments.AcceptedFragment;
-import com.moutamid.simpleolx.Admin.Fragments.PendingFragment;
+import com.moutamid.simpleolx.User.Fragments.AcceptedFragment;
+import com.moutamid.simpleolx.User.Fragments.PendingFragment;
+import com.moutamid.simpleolx.User.Fragments.RejectedFragment;
 
 
 public class MyAdapter extends FragmentPagerAdapter {
@@ -27,11 +28,14 @@ public class MyAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                PendingFragment pendingFragment = new PendingFragment();
+                com.moutamid.simpleolx.User.Fragments.PendingFragment pendingFragment = new PendingFragment();
                 return pendingFragment;
             case 1:
-                AcceptedFragment acceptedFragment = new AcceptedFragment();
+                com.moutamid.simpleolx.User.Fragments.AcceptedFragment acceptedFragment = new AcceptedFragment();
                 return acceptedFragment;
+            case 2:
+                RejectedFragment rejectedFragmeny = new RejectedFragment();
+                return rejectedFragmeny;
             default:
                 return null;
         }

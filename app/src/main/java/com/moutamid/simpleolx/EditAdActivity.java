@@ -166,7 +166,7 @@ public class EditAdActivity extends AppCompatActivity {
                                     for (String imageUrl1 : new_images) {
                                         updatedImageUrls.add(imageUrl1);
                                     }
-                                    AdModel newAd = new AdModel(model.adId, title, model.category, description, contact, currentUserUid, updatedImageUrls, false, host, comapny, category_new, from_date, to_date, time, model.city, model.province);
+                                    AdModel newAd = new AdModel(model.adId, title, model.category, description, contact, currentUserUid, updatedImageUrls, "pending", host, comapny, category_new, from_date, to_date, time, model.city, model.province);
                                     newAd.setSellerUid(currentUserUid);
                                     newAdRef.setValue(newAd);
                                     lodingbar.dismiss();
@@ -179,7 +179,7 @@ public class EditAdActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(EditAdActivity.this, "abc" + previous_images.size(), Toast.LENGTH_SHORT).show();
 
-                    AdModel newAd = new AdModel(model.adId, title, model.category, description, contact, currentUserUid, new_images, false, host, comapny, category_new, from_date, to_date, time, model.city, model.province);
+                    AdModel newAd = new AdModel(model.adId, title, model.category, description, contact, currentUserUid, new_images, "pending", host, comapny, category_new, from_date, to_date, time, model.city, model.province);
                     newAd.setSellerUid(currentUserUid);
                     newAdRef.setValue(newAd);
                     lodingbar.dismiss();
