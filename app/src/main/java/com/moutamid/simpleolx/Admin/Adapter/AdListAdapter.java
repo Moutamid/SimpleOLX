@@ -59,7 +59,7 @@ public class AdListAdapter extends ArrayAdapter<AdModel> {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        Log.d("AdListAdapter", "getView called for position: " + position);
+        Log.d("UserAdListAdapter", "getView called for position: " + position);
         AdModel adModel = getItem(position);
         String adId = adModel.getAdId();
 

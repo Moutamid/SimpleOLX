@@ -1,7 +1,6 @@
 package com.moutamid.simpleolx.User.Fragments;
 
 import android.app.Dialog;
-import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.icu.lang.UCharacter;
 import android.os.Bundle;
@@ -14,6 +13,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -22,8 +22,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.moutamid.simpleolx.AdModel;
 import com.moutamid.simpleolx.Constants;
 import com.moutamid.simpleolx.R;
-import com.moutamid.simpleolx.User.Activity.AdDetailActivity;
-import com.moutamid.simpleolx.User.Adapter.AdListAdapter;
+import com.moutamid.simpleolx.User.Adapter.UserAdListAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +30,7 @@ import java.util.Objects;
 
 public class AcceptedFragment extends Fragment {
     private ListView listView;
-    private com.moutamid.simpleolx.User.Adapter.AdListAdapter adListAdapter;
+    private UserAdListAdapter adListAdapter;
     private DatabaseReference adsRef;
     TextView not_add;
 
@@ -43,7 +42,7 @@ public class AcceptedFragment extends Fragment {
         listView = view.findViewById(R.id.listViewAds);
         not_add = view.findViewById(R.id.not_add);
         adsRef = Constants.databaseReference().child("Ads");
-        adListAdapter = new AdListAdapter(getContext());
+        adListAdapter = new UserAdListAdapter(getContext());
         listView.setAdapter(adListAdapter);
         Query query = adsRef.orderByChild("approved").equalTo("accepted");
         Dialog lodingbar = new Dialog(getContext());
@@ -53,15 +52,16 @@ public class AcceptedFragment extends Fragment {
         lodingbar.show();
 
 
-
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                 List<AdModel> adList = new ArrayList<>();
                 for (DataSnapshot adSnapshot : snapshot.getChildren()) {
-                    AdModel adModel = adSnapshot.getValue(AdModel.class);
-                    adList.add(adModel);
+                    if (adSnapshot.child("sellerUid").getValue().toString().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
+                        AdModel adModel = adSnapshot.getValue(AdModel.class);
+                        adList.add(adModel);
+                    }
                 }
                 if (adList.size() > 0) {
 

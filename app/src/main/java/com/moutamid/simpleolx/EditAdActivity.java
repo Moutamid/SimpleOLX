@@ -123,12 +123,11 @@ public class EditAdActivity extends AppCompatActivity {
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(EditAdActivity.this, "pre" + previous_images.size(), Toast.LENGTH_SHORT).show();
 
                 String title = editTitle.getText().toString().trim();
                 String description = editDescription.getText().toString().trim();
                 String contact = editContact.getText().toString().trim();
-                String category = spinnerCategory.getSelectedItem().toString();
+//                String category = spinnerCategory.getSelectedItem().toString();
                 String host = editHost.getText().toString().trim();
                 String comapny = editCompany.getText().toString().trim();
                 String category_new = editcategory.getText().toString().trim();

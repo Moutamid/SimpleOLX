@@ -130,7 +130,6 @@ public class ExploreAdsActivity extends AppCompatActivity {
         adListAdapter = new ItemsAdapter(this, adModelArrayList);
         adListView.setAdapter(adListAdapter);
         adsRef = Constants.databaseReference().child("Ads");
-        fetchAllAds();
         see_store.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -236,6 +235,12 @@ public class ExploreAdsActivity extends AppCompatActivity {
             // list to our adapter class.
             adListAdapter.filterList(filteredlist);
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        fetchAllAds();
     }
 
     @Override

@@ -1,7 +1,10 @@
 package com.moutamid.simpleolx.User.Adapter;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
+import android.icu.lang.UCharacter;
 import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -29,19 +32,20 @@ import com.moutamid.simpleolx.Constants;
 import com.moutamid.simpleolx.EditAdActivity;
 import com.moutamid.simpleolx.R;
 import com.moutamid.simpleolx.User.Activity.AdDetailActivity;
+import com.moutamid.simpleolx.helper.Config;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class AdListAdapter extends ArrayAdapter<AdModel> {
+public class UserAdListAdapter extends ArrayAdapter<AdModel> {
     private OnItemClickListener clickListener;
     private String currentUserUid;
 
-    public AdListAdapter(Context context, String currentUserUid)
-    {
-        super(context,0, new ArrayList<>());
+    public UserAdListAdapter(Context context, String currentUserUid) {
+        super(context, 0, new ArrayList<>());
         this.currentUserUid = currentUserUid;
     }
 
@@ -53,7 +57,7 @@ public class AdListAdapter extends ArrayAdapter<AdModel> {
         this.clickListener = listener;
     }
 
-    public AdListAdapter(Context context) {
+    public UserAdListAdapter(Context context) {
         super(context, 0, new ArrayList<>());
     }
 
@@ -61,7 +65,7 @@ public class AdListAdapter extends ArrayAdapter<AdModel> {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        Log.d("AdListAdapter", "getView called for position: " + position);
+        Log.d("UserAdListAdapter", "getView called for position: " + position);
         AdModel adModel = getItem(position);
         String adId = adModel.getAdId();
 
@@ -78,21 +82,39 @@ public class AdListAdapter extends ArrayAdapter<AdModel> {
         }
 
         Button editBtn = convertView.findViewById(R.id.editBtn);
-        if (currentUserUid != null && adModel != null && adModel.getSellerUid() != null && currentUserUid.equals(adModel.getSellerUid())) {
-            editBtn.setVisibility(View.VISIBLE);
-        } else {
-            editBtn.setVisibility(View.GONE);
-        }
+        Button deleteBtn = convertView.findViewById(R.id.deleteBtn);
+//        if (currentUserUid != null && adModel != null && adModel.getSellerUid() != null && currentUserUid.equals(adModel.getSellerUid())) {
+//            editBtn.setVisibility(View.VISIBLE);
+//        } else {
+//            editBtn.setVisibility(View.GONE);
+//        }
+        deleteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Dialog lodingbar = new Dialog(getContext());
+                lodingbar.setContentView(R.layout.loading);
+                Objects.requireNonNull(lodingbar.getWindow()).setBackgroundDrawable(new ColorDrawable(UCharacter.JoiningType.TRANSPARENT));
+                lodingbar.setCancelable(false);
+                lodingbar.show();
+                Constants.databaseReference().child("Ads").child(adModel.adId).removeValue(new DatabaseReference.CompletionListener() {
+                    @Override
+                    public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+                        Toast.makeText(getContext(), "Deleted Successfully", Toast.LENGTH_SHORT).show();
+                        lodingbar.dismiss();
+                    }
+                });
 
-//        .setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent editIntent = new Intent(getContext(), EditAdActivity.class);
-//                Stash.put("Model", adModel);
-//                editIntent.putStringArrayListExtra("images", (ArrayList<String>) adModel.getImages());
-//                getContext().startActivity(editIntent);
-//            }
-//        });
+            }
+        });
+        editBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent editIntent = new Intent(getContext(), EditAdActivity.class);
+                Stash.put("Model", adModel);
+                editIntent.putStringArrayListExtra("images", (ArrayList<String>) adModel.getImages());
+                getContext().startActivity(editIntent);
+            }
+        });
 
         ImageView approveBtn = convertView.findViewById(R.id.approveBtn);
         ImageView disapproveBtn = convertView.findViewById(R.id.disapproveBtn);

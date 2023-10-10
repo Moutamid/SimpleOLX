@@ -1,7 +1,6 @@
 package com.moutamid.simpleolx.User.Fragments;
 
 import android.app.Dialog;
-import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.icu.lang.UCharacter;
 import android.os.Bundle;
@@ -22,10 +21,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.moutamid.simpleolx.AdModel;
-import com.moutamid.simpleolx.Admin.Adapter.AdListAdapter;
 import com.moutamid.simpleolx.Constants;
 import com.moutamid.simpleolx.R;
-import com.moutamid.simpleolx.User.Activity.AdDetailActivity;
+import com.moutamid.simpleolx.User.Adapter.UserAdListAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +31,7 @@ import java.util.Objects;
 
 public class RejectedFragment extends Fragment {
     private ListView listView;
-    private com.moutamid.simpleolx.User.Adapter.AdListAdapter adListAdapter;
+    private UserAdListAdapter adListAdapter;
     private DatabaseReference adsRef;
     TextView not_add;
 
@@ -45,7 +43,7 @@ public class RejectedFragment extends Fragment {
         listView = view.findViewById(R.id.listViewAds);
         not_add = view.findViewById(R.id.not_add);
         adsRef = Constants.databaseReference().child("Ads");
-        adListAdapter = new com.moutamid.simpleolx.User.Adapter.AdListAdapter(getContext());
+        adListAdapter = new UserAdListAdapter(getContext());
         listView.setAdapter(adListAdapter);
         Query query = adsRef.orderByChild("approved").equalTo("rejected");
         Dialog lodingbar = new Dialog(getContext());

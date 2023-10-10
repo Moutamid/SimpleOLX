@@ -137,16 +137,36 @@
                     android:textColor="@color/white" />
 
             </LinearLayout>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    >
+    <Button
+        android:id="@+id/editBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="#301934 "
+        android:layout_weight="1"
+        android:text="Edit"
+        android:textColor="@color/white"
+        android:layout_margin="2dp"
+        android:visibility="visible" />
+    <Button
+        android:id="@+id/deleteBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="#F44336"
+        android:text="Delete"
+        android:layout_margin="2dp"
 
-            <Button
-                android:id="@+id/editBtn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:backgroundTint="#301934 "
-                android:text="Edit"
-                android:textColor="@color/white"
-                android:visibility="gone" />
+        android:layout_weight="1"
+        android:textColor="@color/white"
+        android:visibility="visible" />
+
+</LinearLayout>
 
 
         </LinearLayout>
@@ -159,16 +179,6 @@
             android:orientation="vertical">
 
             <ImageView
-                android:id="@+id/approveBtn"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:backgroundTint="#008000"
-                android:src="@drawable/baseline_check_circle_24"
-                android:text="Approve"
-                android:layout_margin="10dp"
-                android:textColor="@color/white"
-                android:visibility="gone" />
-            <ImageView
                 android:id="@+id/disapproveBtn"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
@@ -176,6 +186,16 @@
                 android:src="@drawable/baseline_cancel_24"
                 android:layout_margin="10dp"
                 android:text="Approve"
+                android:textColor="@color/white"
+                android:visibility="gone" />
+            <ImageView
+                android:id="@+id/approveBtn"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:backgroundTint="#008000"
+                android:src="@drawable/baseline_check_circle_24"
+                android:text="Approve"
+                android:layout_margin="10dp"
                 android:textColor="@color/white"
                 android:visibility="gone" />
 
