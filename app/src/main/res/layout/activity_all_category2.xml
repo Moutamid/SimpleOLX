@@ -34,7 +34,6 @@
             android:src="@drawable/baseline_arrow_back_ios_new_24"
             android:tint="@color/white" />
 
-
     </RelativeLayout>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/content_rcv"
