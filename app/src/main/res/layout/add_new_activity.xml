@@ -88,7 +88,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:background="@drawable/rounded_border_background"
-            android:hint="Contact Info"
+            android:hint="Phone Number"
             android:minHeight="48dp"
             android:paddingStart="10dp"
             android:paddingTop="5dp"
@@ -180,6 +180,14 @@
             android:paddingStart="10dp"
             android:paddingTop="5dp"
             android:textColor="@android:color/black" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:fontFamily="@font/texta_bold"
+            android:text="Category"
+            android:textColor="@color/black"
+            android:textSize="20dp" />
 
         <Spinner
             android:id="@+id/spinnerCategory"

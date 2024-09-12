@@ -11,8 +11,7 @@
         android:layout_height="match_parent"
         android:layout_marginBottom="16dp"
         android:background="@color/white"
-        android:divider="@android:color/darker_gray"
-        android:dividerHeight="1dp" />
+     />
     <TextView
         android:id="@+id/not_add"
         android:layout_width="wrap_content"

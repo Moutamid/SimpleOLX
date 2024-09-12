@@ -1,8 +1,10 @@
-package com.moutamid.simpleolx.Admin.Adapter;
+package com.moutamid.simpleolx.User.Adapter;
 
-import android.content.ContentResolver;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
+import android.icu.lang.UCharacter;
 import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -29,17 +31,21 @@ import com.moutamid.simpleolx.AdModel;
 import com.moutamid.simpleolx.Constants;
 import com.moutamid.simpleolx.EditAdActivity;
 import com.moutamid.simpleolx.R;
+import com.moutamid.simpleolx.User.Activity.AdDetailActivity;
+import com.moutamid.simpleolx.helper.Config;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
-public class AdListAdapter extends ArrayAdapter<AdModel> {
+import de.hdodenhof.circleimageview.CircleImageView;
+
+public class UserAdListAdapter extends ArrayAdapter<AdModel> {
     private OnItemClickListener clickListener;
     private String currentUserUid;
 
-    public AdListAdapter(Context context, String currentUserUid)
-    {
-        super(context,0, new ArrayList<>());
+    public UserAdListAdapter(Context context, String currentUserUid) {
+        super(context, 0, new ArrayList<>());
         this.currentUserUid = currentUserUid;
     }
 
@@ -51,7 +57,7 @@ public class AdListAdapter extends ArrayAdapter<AdModel> {
         this.clickListener = listener;
     }
 
-    public AdListAdapter(Context context) {
+    public UserAdListAdapter(Context context) {
         super(context, 0, new ArrayList<>());
     }
 
@@ -64,38 +70,47 @@ public class AdListAdapter extends ArrayAdapter<AdModel> {
         String adId = adModel.getAdId();
 
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.ad_list_adapter, parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.user_list, parent, false);
             if (adModel == null) {
             }
             convertView.setOnClickListener(v -> {
-                if (clickListener != null) {
-                    clickListener.onItemClick(adModel);
-                }
+                Intent editIntent = new Intent(getContext(), AdDetailActivity.class);
+                Stash.put("Model", adModel);
+                editIntent.putStringArrayListExtra("images", (ArrayList<String>) adModel.getImages());
+                getContext().startActivity(editIntent);
             });
         }
 
         Button editBtn = convertView.findViewById(R.id.editBtn);
-        if (currentUserUid != null && adModel != null && adModel.getSellerUid() != null && currentUserUid.equals(adModel.getSellerUid())) {
-            editBtn.setVisibility(View.VISIBLE);
-        } else {
-            editBtn.setVisibility(View.GONE);
-        }
+        Button deleteBtn = convertView.findViewById(R.id.deleteBtn);
+//        if (currentUserUid != null && adModel != null && adModel.getSellerUid() != null && currentUserUid.equals(adModel.getSellerUid())) {
+//            editBtn.setVisibility(View.VISIBLE);
+//        } else {
+//            editBtn.setVisibility(View.GONE);
+//        }
+        deleteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Dialog lodingbar = new Dialog(getContext());
+                lodingbar.setContentView(R.layout.loading);
+                Objects.requireNonNull(lodingbar.getWindow()).setBackgroundDrawable(new ColorDrawable(UCharacter.JoiningType.TRANSPARENT));
+                lodingbar.setCancelable(false);
+                lodingbar.show();
+                Constants.databaseReference().child("Ads").child(adModel.adId).removeValue(new DatabaseReference.CompletionListener() {
+                    @Override
+                    public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+                        Toast.makeText(getContext(), "Deleted Successfully", Toast.LENGTH_SHORT).show();
+                        lodingbar.dismiss();
+                    }
+                });
 
+            }
+        });
         editBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent editIntent = new Intent(getContext(), EditAdActivity.class);
-                Stash.put("EditAd", adModel);
-                editIntent.putExtra("title", adModel.getTitle());
-                editIntent.putExtra("category", adModel.getCategory());
-                editIntent.putExtra("description", adModel.getDescription());
-                editIntent.putExtra("contact", adModel.getContact());
-                editIntent.putExtra("host", adModel.getHost());
-                editIntent.putExtra("company", adModel.getCompany());
-                editIntent.putExtra("category", adModel.getNew_category());
-                editIntent.putExtra("from_date", adModel.getFrom_date());
-                editIntent.putExtra("to_date", adModel.getTo_date());
-                editIntent.putExtra("time", adModel.getTime());
+                Stash.put("Model", adModel);
                 editIntent.putStringArrayListExtra("images", (ArrayList<String>) adModel.getImages());
                 getContext().startActivity(editIntent);
             }
@@ -188,7 +203,7 @@ public class AdListAdapter extends ArrayAdapter<AdModel> {
             }
         });
 
-        ImageView adImage = convertView.findViewById(R.id.ad_image);
+        CircleImageView adImage = convertView.findViewById(R.id.ad_image);
         TextView adTitle = convertView.findViewById(R.id.ad_title);
         TextView adCategory = convertView.findViewById(R.id.ad_category);
         Button callButton = convertView.findViewById(R.id.ad_call_button);
