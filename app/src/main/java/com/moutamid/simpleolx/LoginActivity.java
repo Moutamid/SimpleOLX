@@ -78,7 +78,6 @@ public class LoginActivity extends AppCompatActivity {
                         Config.dismissProgressDialog();
                         finish();
                         startActivity(intent);
-
                     } else {
                         Stash.put(Constants.IS_ADMIN, false);
                         Intent intent = new Intent(LoginActivity.this, ExploreAdsActivity.class);
