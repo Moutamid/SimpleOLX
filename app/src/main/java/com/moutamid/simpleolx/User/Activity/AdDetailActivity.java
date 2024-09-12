@@ -21,7 +21,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 public class AdDetailActivity extends AppCompatActivity {
-    private TextView adDetailTitle, adDetailCategory, adDetailDescription, company_txt, host_txt;
+    private TextView adDetailTitle, adDetailCategory, adDetailDescription, company_txt, host_txt, from_date_txt, to_date_txt, time_txt;
     private ViewPager viewPager;
     ArrayList<String> imageUrls;
     ImageView favourite_img, unfavourite_img;
@@ -34,6 +34,9 @@ public class AdDetailActivity extends AppCompatActivity {
 
 //        imageNumberTextView = findViewById(R.id.image_number_textview);
         viewPager = findViewById(R.id.viewPager);
+        time_txt = findViewById(R.id.time_txt);
+        from_date_txt = findViewById(R.id.from_date_txt);
+        to_date_txt = findViewById(R.id.to_date_txt);
         adDetailTitle = findViewById(R.id.ad_detail_title);
         name = findViewById(R.id.name);
         adDetailCategory = findViewById(R.id.ad_detail_category);
@@ -45,7 +48,6 @@ public class AdDetailActivity extends AppCompatActivity {
         favourite_img = findViewById(R.id.favourite);
         company_txt = findViewById(R.id.company_txt);
         host_txt = findViewById(R.id.host_txt);
-
         AdModel model = (AdModel) Stash.getObject("Model", AdModel.class);
         imageUrls = getIntent().getStringArrayListExtra("images");
         name.setText(model.title);
@@ -56,8 +58,11 @@ public class AdDetailActivity extends AppCompatActivity {
         adDetailDescription.setText(model.description);
         company_txt.setText(model.getCompany());
         host_txt.setText(model.getHost());
+        from_date_txt.setText(model.getFrom_date());
+        to_date_txt.setText(model.getTo_date());
+        time_txt.setText(model.getTime());
 
-//        if (!imageUrls.isEmpty()) {
+        //        if (!imageUrls.isEmpty()) {
 //            imageNumberTextView.setText("1 of " + imageUrls.size());
 //        } else {
 //            imageNumberTextView.setText("0 of 0");
@@ -68,15 +73,11 @@ public class AdDetailActivity extends AppCompatActivity {
         ArrayList<AdModel> resturantModels = Stash.getArrayList(Config.favourite, AdModel.class);
         if (resturantModels != null) {
             for (int i = 0; i < resturantModels.size(); i++) {
-
                 if (model.getAdId().equals(resturantModels.get(i).getAdId())) {
                     unfavourite_img.setVisibility(View.VISIBLE);
-
                 } else {
                     favourite_img.setVisibility(View.VISIBLE);
-
                 }
-
             }
         }
         favourite_img.setOnClickListener(new View.OnClickListener() {

@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -36,9 +37,9 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
-public class AddNewActivity extends AppCompatActivity {
+public class AddNewActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    private EditText editTitle, editDescription, editContact, editHost,editCompany, editcategory, edit_from_date, edit_to_date, editTime;
+    private EditText editTitle, editDescription, editContact, editHost, editCompany, editcategory, edit_from_date, edit_to_date, editTime;
     private Spinner spinnerCategory;
     private static final int REQUEST_CODE_IMAGES = 1;
     private ViewPager viewPager;
@@ -47,11 +48,23 @@ public class AddNewActivity extends AppCompatActivity {
     private Button btnAddImages, btnPreview, btnSubmit;
     private ImageView uploadBtn;
     Calendar myCalendar = Calendar.getInstance();
+    Spinner provincespinner, cityspinner;
+    String province_str, city_str;
+    String[] city = {"Toronto", "Montréal",
+            "Vancouver", " Ottawa", " Edmonton", "Calgary", "Quebéc ", "Winnipeg ", "Hamilton", "London ",
+            "Kitchener ", " St Catharines-Niagara", "Windsor\tOntario ", "Halifax ", "Victoria ", " Oshawa",
+            "Saskatoon ", "Regina ", "St John's", "Sudbury", "Chicoutimi", "Sydney ", "Sherbrooke", "Kingston ",
+            " Trois-Rivières", "Kelowna ", "Abbotsford ", "Saint John", "Thunder Bay", "Barrie"};
+
+    String[] province = {"Quebec", "British Columbia", "Ontario", "Alberta", "Manitoba", "Nova Scotia", "Saskatchewan", "Newfoundland", "New Brunswick"};
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_new_activity);
+        provincespinner = findViewById(R.id.provincespinner);
+        cityspinner = findViewById(R.id.cityspinner);
         viewPager = findViewById(R.id.viewPagerImages);
         uploadBtn = findViewById(R.id.uploadImageView);
         imagePagerAdapter = new ImagePagerAdapter(this, selectedImages);
@@ -83,6 +96,29 @@ public class AddNewActivity extends AppCompatActivity {
             SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
             edit_from_date.setText(sdf.format(myCalendar.getTime()));
         };
+
+        provincespinner.setOnItemSelectedListener(this);
+
+        ArrayAdapter ad = new ArrayAdapter(this, android.R.layout.simple_spinner_item, province);
+        ad.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        provincespinner.setAdapter(ad);
+        ArrayAdapter ad1 = new ArrayAdapter(this, android.R.layout.simple_spinner_item, city);
+        ad1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        cityspinner.setAdapter(ad1);
+        cityspinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                city_str = city[i];
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+
+
+        });
+
         DatePickerDialog.OnDateSetListener date1 = (view, year, monthOfYear, dayOfMonth) -> {
             myCalendar.set(Calendar.YEAR, year);
             myCalendar.set(Calendar.MONTH, monthOfYear);
@@ -91,13 +127,17 @@ public class AddNewActivity extends AppCompatActivity {
             SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
             edit_to_date.setText(sdf.format(myCalendar.getTime()));
         };
-        edit_from_date.setOnClickListener(v -> {
+        edit_from_date.setOnClickListener(v ->
+
+        {
             DatePickerDialog datePickerDialog = new DatePickerDialog(AddNewActivity.this, date, myCalendar
                     .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
                     myCalendar.get(Calendar.DAY_OF_MONTH));
             datePickerDialog.show();
         });
-        edit_to_date.setOnClickListener(v -> {
+        edit_to_date.setOnClickListener(v ->
+
+        {
             DatePickerDialog datePickerDialog = new DatePickerDialog(AddNewActivity.this, date1, myCalendar
                     .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
                     myCalendar.get(Calendar.DAY_OF_MONTH));
@@ -118,7 +158,7 @@ public class AddNewActivity extends AppCompatActivity {
                 String time = editTime.getText().toString().trim();
                 String currentUserUid = Constants.auth().getCurrentUser().getUid();
 
-                if (TextUtils.isEmpty(title) || TextUtils.isEmpty(description) || TextUtils.isEmpty(contact)|| TextUtils.isEmpty(host)|| TextUtils.isEmpty(comapny)|| TextUtils.isEmpty(category_new)|| TextUtils.isEmpty(from_date)|| TextUtils.isEmpty(to_date)|| TextUtils.isEmpty(time)) {
+                if (TextUtils.isEmpty(title) || TextUtils.isEmpty(description) || TextUtils.isEmpty(contact) || TextUtils.isEmpty(host) || TextUtils.isEmpty(comapny) || TextUtils.isEmpty(category_new) || TextUtils.isEmpty(from_date) || TextUtils.isEmpty(to_date) || TextUtils.isEmpty(time) || TextUtils.isEmpty(province_str) || TextUtils.isEmpty(province_str)) {
                     Toast.makeText(AddNewActivity.this, "Fill All The Fields", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -149,7 +189,7 @@ public class AddNewActivity extends AppCompatActivity {
                             uploadedImages[0]++;
 
                             if (uploadedImages[0] == totalImages) {
-                                AdModel newAd = new AdModel(adKey, title, category, description, contact, currentUserUid, updatedImageUrls, false, host, comapny, category_new, from_date, to_date, time);
+                                AdModel newAd = new AdModel(adKey, title, category, description, contact, currentUserUid, updatedImageUrls, false, host, comapny, category_new, from_date, to_date, time, city_str, province_str);
                                 newAd.setSellerUid(currentUserUid);
 
                                 newAdRef.setValue(newAd);
@@ -262,4 +302,17 @@ public class AddNewActivity extends AppCompatActivity {
     public void backPress(View view) {
         onBackPressed();
     }
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        province_str = province[i];
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
+    }
+
+
 }
